@@ -1,0 +1,33 @@
+{
+    "name": "dclaysmith/laravel-cms",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "D Clay Smith",
+            "email": "dclaysmith@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dclaysmith\\LaravelCms\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dclaysmith\\LaravelCms\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dclaysmith\\LaravelCms\\Providers\\LaravelCmsServiceProvider"
+            ]
+        }
+    }
+}
