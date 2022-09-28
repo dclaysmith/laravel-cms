@@ -26,7 +26,7 @@ class LaravelCmsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../src/View/Components/' => app_path('View/Components/LaravelCms'),
             __DIR__.'/../../resources/views/components/' => resource_path('views/components/laravel-cms'),
-        ], "components");       
+        ], "components");
         
         /**
          * Load Routes
