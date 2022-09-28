@@ -25,7 +25,7 @@ Route::middleware("web")->group(function () {
             TemplateSectionController::class
         );
         Route::middleware("guest")->group(function () {
-            Route::get("/cms-render", [RenderController::class, "post"]);
+            Route::post("/cms-render", [RenderController::class, "store"]);
         });
     });
 });
