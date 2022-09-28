@@ -10,8 +10,6 @@
 <script>
 import AdminMenu from "./menu/index.vue";
 
-import AdminPagesList from "./pages/index.vue";
-
 export default {
     name: "LaravelCmsAdmin",
     components: {

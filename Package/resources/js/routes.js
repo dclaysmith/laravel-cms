@@ -7,6 +7,7 @@ import Pages from "./components/admin/pages/index.vue";
 import Page from "./components/admin/pages/item/index.vue";
 import Paths from "./components/admin/paths/index.vue";
 import Templates from "./components/admin/templates/index.vue";
+import Template from "./components/admin/templates/item/index.vue";
 
 const routes = [
     {
@@ -44,6 +45,12 @@ const routes = [
         path: "/templates",
         name: "Templates",
         component: Templates,
+    },
+    {
+        path: "/templates/:id",
+        name: "Template",
+        component: Template,
+        props: true,
     },
 ];
 

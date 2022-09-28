@@ -14,7 +14,11 @@ class TemplateSectionController extends Controller
      */
     public function index()
     {
-        return response(["status"=>"ok"]);
+        return response([
+            ["id" => 1, "name" => "Sidebar"],
+            ["id" => 2, "name" => "Footer"],
+            ["id" => 3, "name" => "Header"],
+        ]);
     }
 
     /**

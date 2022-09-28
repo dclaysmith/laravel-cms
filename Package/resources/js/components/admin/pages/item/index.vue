@@ -74,23 +74,14 @@ export default {
     name: "LaravelCmsAdminPage",
     components: { PageTemplate: Template },
     props: ["id"],
-    setup() {
+    setup(props) {
         /**
          * Reactive Properties
          */
         const page = ref(null);
+        const pageOriginal = ref(null);
         const template = ref({ id: 1, name: "Blog Post" });
         const templates = ref(null);
-        const pageOriginal = ref(null);
-
-        /**
-         * Updated
-         */
-        const saveEnabled = computed(() => {
-            return JSON.stringify(pageOriginal) != JSON.stringify(page)
-                ? true
-                : false;
-        });
 
         /**
          * Methods
@@ -100,15 +91,24 @@ export default {
             templates.value = await response.json();
         }
         async function fetchPage() {
-            const response = await fetch("/api/cms-pages/" + this.id);
+            const response = await fetch("/api/cms-pages/" + props.id);
             page.value = await response.json();
-            pageOriginal.value = JSON.parse(JSON.stringify(page));
+            pageOriginal.value = Object.assign({}, page.value);
         }
         async function onSubmit() {
             alert("submit");
         }
 
         Promise.all([fetchPage(), fetchTemplateList()]);
+
+        /**
+         * Updated
+         */
+        const saveEnabled = computed(() => {
+            return (
+                JSON.stringify(pageOriginal.value) != JSON.stringify(page.value)
+            );
+        });
 
         return {
             page,

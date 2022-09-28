@@ -14,7 +14,11 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        return response([["id" => 1, "name" => "Blog Post"],["id" => 2, "name" => "Blog Category"],["id" => 3, "name" => "Policy"]]);
+        return response([
+            ["id" => 1, "name" => "Blog Post"],
+            ["id" => 2, "name" => "Blog Category"],
+            ["id" => 3, "name" => "Policy"],
+        ]);
     }
 
     /**
@@ -46,7 +50,7 @@ class TemplateController extends Controller
      */
     public function show($id)
     {
-        //
+        return response(["id" => 1, "name" => "Blog Post"]);
     }
 
     /**

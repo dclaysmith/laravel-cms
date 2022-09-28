@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -13,7 +12,6 @@ return new class extends Migration
      */
     public function up()
     {
-
         /**
          * Cms Media
          * - images, etc. uploaded to CMS
@@ -39,8 +37,11 @@ return new class extends Migration
          * - On save, add the current /path to the cms_pathes table.
          */
         Schema::create("cms_pages", function (Blueprint $table) {
-            $table->id();           
-            $table->foreignId("cms_template_id")->nullable(true)->default(null);
+            $table->id();
+            $table
+                ->foreignId("cms_template_id")
+                ->nullable(true)
+                ->default(null);
             $table->string("title");
             $table->string("meta_keywords");
             $table->string("meta_description");
@@ -90,9 +91,9 @@ return new class extends Migration
          */
         Schema::create("cms_template_sections", function (Blueprint $table) {
             $table->id();
+            $table->foreignId("cms_template_id");
             $table->string("name");
             $table->string("slug");
-            $table->foreignId("cms_template_id");
             $table->timestamps();
 
             $table->index("cms_template_id");
