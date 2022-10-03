@@ -16,8 +16,8 @@ class PageComponentResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "page_id" => $this->page_id,
-            "component_id" => $this->component_id,
+            "page_id" => $this->cms_page_id,
+            "component_id" => $this->cms_component_id,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
         ];

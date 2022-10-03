@@ -7,6 +7,11 @@ use Illuminate\Routing\Controller;
 
 use Dclaysmith\LaravelCms\Models\Path;
 
+use Dclaysmith\LaravelCms\Http\Requests\Api\Path\UpdateRequest;
+use Dclaysmith\LaravelCms\Http\Requests\Api\Path\StoreRequest;
+
+use Dclaysmith\LaravelCms\Http\Resources\PathResource;
+
 use Dclaysmith\LaravelCms\Http\Traits\AppliesDefaults;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
@@ -61,9 +66,13 @@ class PathController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $path = Path::firstOrCreate($data);
+
+        return new PathResource($path, 201);
     }
 
     /**
@@ -74,7 +83,9 @@ class PathController extends Controller
      */
     public function show($id)
     {
-        //
+        $path = Path::findOrFail($id);
+
+        return new PathResource($template, 201);
     }
 
     /**
@@ -95,9 +106,17 @@ class PathController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        $path = Path::findOrFail($id);
+
+        $path->fill($data);
+
+        $path->save();
+
+        return new PathResource($path, 200);
     }
 
     /**
@@ -108,6 +127,10 @@ class PathController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $path = Path::findOrFail($id);
+
+        $path->delete();
+
+        return response(200);
     }
 }

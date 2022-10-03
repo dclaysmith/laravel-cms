@@ -70,9 +70,9 @@ class TemplateSectionController extends Controller
     {
         $data = $request->validated();
 
-        $template = TemplateSection::firstOrCreate($data);
+        $templateSection = TemplateSection::firstOrCreate($data);
 
-        return new TemplateSectionResource($template, 201);
+        return new TemplateSectionResource($templateSection, 201);
     }
 
     /**
@@ -108,13 +108,13 @@ class TemplateSectionController extends Controller
     {
         $data = $request->validated();
 
-        $template = TemplateSection::findOrFail($id);
+        $templateSection = TemplateSection::findOrFail($id);
 
-        $template->fill($data);
+        $templateSection->fill($data);
 
-        $template->save();
+        $templateSection->save();
 
-        return new TemplateSectionResource($template, 200);
+        return new TemplateSectionResource($templateSection, 200);
     }
 
     /**

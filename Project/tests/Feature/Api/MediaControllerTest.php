@@ -14,7 +14,7 @@ class MediaControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $response = $this->get('/api/cms-media');
+        $response = $this->get("/api/cms-media");
 
         $response->assertStatus(200);
     }

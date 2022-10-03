@@ -14,7 +14,7 @@ class PageControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $response = $this->get('/api/cms-pages');
+        $response = $this->get("/api/cms-pages");
 
         $response->assertStatus(200);
     }

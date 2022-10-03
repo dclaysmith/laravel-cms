@@ -22,7 +22,7 @@ class Path extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ["path"];
+    protected $fillable = ["cms_page_id", "path"];
 
     /**
      * The attributes that should be hidden for serialization.
