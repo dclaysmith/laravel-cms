@@ -5,30 +5,49 @@ namespace Dclaysmith\LaravelCms\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+use Dclaysmith\LaravelCms\Models\Template;
+
+use Dclaysmith\LaravelCms\Http\Requests\Api\Template\UpdateRequest;
+use Dclaysmith\LaravelCms\Http\Requests\Api\Template\StoreRequest;
+
+use Dclaysmith\LaravelCms\Http\Resources\TemplateResource;
+
+use Dclaysmith\LaravelCms\Http\Traits\AppliesDefaults;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesPagination;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesSorts;
+
 class TemplateController extends Controller
 {
+    use AppliesDefaults,
+        AppliesFilters,
+        AppliesIncludes,
+        AppliesPagination,
+        AppliesSorts;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response([
-            ["id" => 1, "name" => "Blog Post"],
-            ["id" => 2, "name" => "Blog Category"],
-            ["id" => 3, "name" => "Policy"],
-        ]);
-    }
+        $builder = Template::query();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->applyIncludes($builder, $request, []);
+
+        $this->applyFilters($builder, $request, []);
+
+        $this->applySorts(
+            $builder,
+            $request,
+            ["created_at", "name", "updated_at"],
+            [],
+            ["name"]
+        );
+
+        return $this->applyPagination($builder, $request);
     }
 
     /**
@@ -37,9 +56,13 @@ class TemplateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $template = Template::firstOrCreate($data);
+
+        return new TemplateResource($template, 201);
     }
 
     /**
@@ -50,18 +73,9 @@ class TemplateController extends Controller
      */
     public function show($id)
     {
-        return response(["id" => 1, "name" => "Blog Post"]);
-    }
+        $template = Template::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return new TemplateResource($template, 201);
     }
 
     /**
@@ -71,9 +85,17 @@ class TemplateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        $template = Template::findOrFail($id);
+
+        $template->fill($data);
+
+        $template->save();
+
+        return new TemplateResource($template, 200);
     }
 
     /**
@@ -84,6 +106,10 @@ class TemplateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $template = Template::findOrFail($id);
+
+        $template->delete();
+
+        return response(200);
     }
 }

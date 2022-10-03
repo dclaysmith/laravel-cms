@@ -2,11 +2,14 @@
 
 namespace Tests\Feature\Api;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
 use Tests\TestCase;
 
-class ObjectControllerTest extends TestCase
+class PageComponentControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic test example.
      *
@@ -14,7 +17,7 @@ class ObjectControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $response = $this->get('/api/cms-objects');
+        $response = $this->get("/api/cms-page-components");
 
         $response->assertStatus(200);
     }

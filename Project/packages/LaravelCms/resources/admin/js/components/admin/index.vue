@@ -1,4 +1,5 @@
 <template>
+    <notifications />
     <div class="cms-container">
         <div class="cms-menu"><admin-menu></admin-menu></div>
         <div class="cms-content">

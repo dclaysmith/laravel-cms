@@ -19,6 +19,7 @@ return new class extends Migration {
         Schema::create("cms_media", function (Blueprint $table) {
             $table->id();
             $table->string("url");
+            $table->string("caption");
             $table->timestamps();
         });
 
@@ -26,7 +27,7 @@ return new class extends Migration {
          * Cms Object
          * - Menus, etc.
          */
-        Schema::create("cms_objects", function (Blueprint $table) {
+        Schema::create("cms_components", function (Blueprint $table) {
             $table->id();
             $table->string("body");
             $table->timestamps();
@@ -42,10 +43,11 @@ return new class extends Migration {
                 ->foreignId("cms_template_id")
                 ->nullable(true)
                 ->default(null);
+            $table->string("name");
             $table->string("title");
-            $table->string("meta_keywords");
-            $table->string("meta_description");
-            $table->string("body");
+            $table->string("meta_keywords")->nullable(true);
+            $table->string("meta_description")->nullable(true);
+            $table->string("body")->nullable(true);
             $table->string("path");
             $table->boolean("allow_index")->default(true);
             $table->timestamps();
@@ -56,10 +58,10 @@ return new class extends Migration {
         /**
          * Cms Page Object
          */
-        Schema::create("cms_page_objects", function (Blueprint $table) {
+        Schema::create("cms_page_components", function (Blueprint $table) {
             $table->id();
             $table->foreignId("cms_page_id");
-            $table->foreignId("cms_object_id");
+            $table->foreignId("cms_component_id");
             $table->foreignId("cms_template_section_id");
             $table->string("html")->nullable(true);
             $table->string("view")->nullable(true);
@@ -67,7 +69,7 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->index("cms_page_id");
-            $table->index("cms_object_id");
+            $table->index("cms_component_id");
             $table->index("cms_template_section_id");
         });
 
@@ -86,14 +88,15 @@ return new class extends Migration {
         });
 
         /**
-         * Cms Templat Sections
-         * - A section of a template that contains objects
+         * Cms Template Sections
+         * - A section of a template that contains components
          */
         Schema::create("cms_template_sections", function (Blueprint $table) {
             $table->id();
             $table->foreignId("cms_template_id");
             $table->string("name");
             $table->string("slug");
+            $table->string("description")->nullable(true);
             $table->timestamps();
 
             $table->index("cms_template_id");
@@ -107,7 +110,7 @@ return new class extends Migration {
             $table->id();
             $table->string("name");
             $table->string("slug");
-            $table->string("body");
+            $table->string("description")->nullable(true);
             $table->timestamps();
         });
     }
@@ -122,8 +125,8 @@ return new class extends Migration {
         Schema::dropIfExists("cms_templates");
         Schema::dropIfExists("cms_template_sections");
         Schema::dropIfExists("cms_paths");
-        Schema::dropIfExists("cms_objects");
-        Schema::dropIfExists("cms_page_objects");
+        Schema::dropIfExists("cms_components");
+        Schema::dropIfExists("cms_page_components");
         Schema::dropIfExists("cms_pages");
         Schema::dropIfExists("cms_media");
     }

@@ -5,16 +5,44 @@ namespace Dclaysmith\LaravelCms\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class ObjectController extends Controller
+use Dclaysmith\LaravelCms\Models\PageComponent;
+
+use Dclaysmith\LaravelCms\Http\Traits\AppliesDefaults;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesPagination;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesSorts;
+
+class PageComponentController extends Controller
 {
+    use AppliesDefaults,
+        AppliesFilters,
+        AppliesIncludes,
+        AppliesPagination,
+        AppliesSorts;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response(["status"=>"ok"]);
+        $builder = PageComponent::query();
+
+        $this->applyIncludes($builder, $request, []);
+
+        $this->applyFilters($builder, $request, []);
+
+        $this->applySorts(
+            $builder,
+            $request,
+            ["sort_order"],
+            [],
+            ["sort_order"]
+        );
+
+        return $this->applyPagination($builder, $request);
     }
 
     /**

@@ -58,24 +58,22 @@ export default {
          */
         async function fetchTemplate() {
             const response = await fetch("/api/cms-templates/" + props.id);
-            template.value = await response.json();
+            const json = await response.json();
+            template.value = json.data;
             templateOriginal.value = Object.assign({}, template.value);
         }
         async function onSubmit() {
-            fetch("/api/cms-templates", {
+            const response = await fetch("/api/cms-templates/" + props.id, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
                 method: "PUT",
                 body: JSON.stringify(template.value),
-            })
-                .then(function (res) {
-                    console.log(res);
-                })
-                .catch(function (res) {
-                    console.log(res);
-                });
+            });
+            const json = await response.json();
+            template.value = json.data;
+            templateOriginal.value = Object.assign({}, template.value);
         }
 
         fetchTemplate();

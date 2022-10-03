@@ -5,20 +5,49 @@ namespace Dclaysmith\LaravelCms\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+use Dclaysmith\LaravelCms\Models\TemplateSection;
+
+use Dclaysmith\LaravelCms\Http\Requests\Api\TemplateSection\UpdateRequest;
+use Dclaysmith\LaravelCms\Http\Requests\Api\TemplateSection\StoreRequest;
+
+use Dclaysmith\LaravelCms\Http\Resources\TemplateSectionResource;
+
+use Dclaysmith\LaravelCms\Http\Traits\AppliesDefaults;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesPagination;
+use Dclaysmith\LaravelCms\Http\Traits\AppliesSorts;
+
 class TemplateSectionController extends Controller
 {
+    use AppliesDefaults,
+        AppliesFilters,
+        AppliesIncludes,
+        AppliesPagination,
+        AppliesSorts;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response([
-            ["id" => 1, "name" => "Sidebar"],
-            ["id" => 2, "name" => "Footer"],
-            ["id" => 3, "name" => "Header"],
-        ]);
+        $builder = TemplateSection::query();
+
+        $this->applyIncludes($builder, $request, []);
+
+        $this->applyFilters($builder, $request, []);
+
+        $this->applySorts(
+            $builder,
+            $request,
+            ["name", "slug"],
+            [],
+            ["name"]
+        );
+
+        return $this->applyPagination($builder, $request);
     }
 
     /**
@@ -37,9 +66,13 @@ class TemplateSectionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $template = TemplateSection::firstOrCreate($data);
+
+        return new TemplateSectionResource($template, 201);
     }
 
     /**
@@ -71,9 +104,17 @@ class TemplateSectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        $template = TemplateSection::findOrFail($id);
+
+        $template->fill($data);
+
+        $template->save();
+
+        return new TemplateSectionResource($template, 200);
     }
 
     /**
