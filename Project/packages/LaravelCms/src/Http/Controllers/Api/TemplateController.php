@@ -75,7 +75,7 @@ class TemplateController extends Controller
     {
         $template = Template::findOrFail($id);
 
-        return new TemplateResource($template, 201);
+        return new TemplateResource($template, 200);
     }
 
     /**

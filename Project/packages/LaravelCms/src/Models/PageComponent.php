@@ -22,7 +22,14 @@ class PageComponent extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ["html", "view", "sort_order"];
+    protected $fillable = [
+        "cms_page_id",
+        "cms_component_id",
+        "cms_template_section_id",
+        "html",
+        "view",
+        "sort_order",
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

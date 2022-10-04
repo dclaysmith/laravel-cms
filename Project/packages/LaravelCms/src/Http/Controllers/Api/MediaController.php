@@ -7,6 +7,11 @@ use Illuminate\Routing\Controller;
 
 use Dclaysmith\LaravelCms\Models\Media;
 
+use Dclaysmith\LaravelCms\Http\Requests\Api\Media\UpdateRequest;
+use Dclaysmith\LaravelCms\Http\Requests\Api\Media\StoreRequest;
+
+use Dclaysmith\LaravelCms\Http\Resources\MediaResource;
+
 use Dclaysmith\LaravelCms\Http\Traits\AppliesDefaults;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
@@ -34,13 +39,7 @@ class MediaController extends Controller
 
         $this->applyFilters($builder, $request, []);
 
-        $this->applySorts(
-            $builder,
-            $request,
-            ["sort_order"],
-            [],
-            ["sort_order"]
-        );
+        $this->applySorts($builder, $request, ["id"], [], ["id"]);
 
         return $this->applyPagination($builder, $request);
     }
@@ -61,9 +60,13 @@ class MediaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $media = Media::firstOrCreate($data);
+
+        return new MediaResource($media, 201);
     }
 
     /**
@@ -74,7 +77,9 @@ class MediaController extends Controller
      */
     public function show($id)
     {
-        //
+        $media = Media::findOrFail($id);
+
+        return new MediaResource($media, 200);
     }
 
     /**
@@ -95,9 +100,17 @@ class MediaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        $media = Media::findOrFail($id);
+
+        $media->fill($data);
+
+        $media->save();
+
+        return new MediaResource($media, 200);
     }
 
     /**
@@ -108,6 +121,10 @@ class MediaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $media = Media::findOrFail($id);
+
+        $media->delete();
+
+        return response(200);
     }
 }

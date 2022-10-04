@@ -7,6 +7,11 @@ use Illuminate\Routing\Controller;
 
 use Dclaysmith\LaravelCms\Models\PageComponent;
 
+use Dclaysmith\LaravelCms\Http\Requests\Api\PageComponent\UpdateRequest;
+use Dclaysmith\LaravelCms\Http\Requests\Api\PageComponent\StoreRequest;
+
+use Dclaysmith\LaravelCms\Http\Resources\PageComponentResource;
+
 use Dclaysmith\LaravelCms\Http\Traits\AppliesDefaults;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
@@ -61,9 +66,13 @@ class PageComponentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $pageComponent = PageComponent::firstOrCreate($data);
+
+        return new PageComponentResource($pageComponent, 201);
     }
 
     /**
@@ -74,7 +83,9 @@ class PageComponentController extends Controller
      */
     public function show($id)
     {
-        //
+        $pageComponent = PageComponent::findOrFail($id);
+
+        return new PageComponentResource($pageComponent, 201);
     }
 
     /**
@@ -95,9 +106,17 @@ class PageComponentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        $pageComponent = PageComponent::findOrFail($id);
+
+        $pageComponent->fill($data);
+
+        $pageComponent->save();
+
+        return new PageComponentResource($pageComponent, 200);
     }
 
     /**
@@ -108,6 +127,10 @@ class PageComponentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pageComponent = PageComponent::findOrFail($id);
+
+        $pageComponent->delete();
+
+        return response(200);
     }
 }

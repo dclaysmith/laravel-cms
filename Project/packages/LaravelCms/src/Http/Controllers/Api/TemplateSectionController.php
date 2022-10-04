@@ -39,13 +39,7 @@ class TemplateSectionController extends Controller
 
         $this->applyFilters($builder, $request, []);
 
-        $this->applySorts(
-            $builder,
-            $request,
-            ["name", "slug"],
-            [],
-            ["name"]
-        );
+        $this->applySorts($builder, $request, ["name", "slug"], [], ["name"]);
 
         return $this->applyPagination($builder, $request);
     }
@@ -83,7 +77,9 @@ class TemplateSectionController extends Controller
      */
     public function show($id)
     {
-        //
+        $templateSection = TemplateSection::findOrFail($id);
+
+        return new TemplateSectionResource($templateSection, 200);
     }
 
     /**

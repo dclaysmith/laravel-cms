@@ -39,13 +39,7 @@ class PathController extends Controller
 
         $this->applyFilters($builder, $request, []);
 
-        $this->applySorts(
-            $builder,
-            $request,
-            ["path"],
-            [],
-            ["path"]
-        );
+        $this->applySorts($builder, $request, ["path"], [], ["path"]);
 
         return $this->applyPagination($builder, $request);
     }

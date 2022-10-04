@@ -5,13 +5,20 @@ namespace Dclaysmith\LaravelCms\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+use Dclaysmith\LaravelCms\Models\Component;
+
+use Dclaysmith\LaravelCms\Http\Requests\Api\Component\UpdateRequest;
+use Dclaysmith\LaravelCms\Http\Requests\Api\Component\StoreRequest;
+
+use Dclaysmith\LaravelCms\Http\Resources\ComponentResource;
+
 use Dclaysmith\LaravelCms\Http\Traits\AppliesDefaults;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesPagination;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesSorts;
 
-class ObjectController extends Controller
+class ComponentController extends Controller
 {
     use AppliesDefaults,
         AppliesFilters,
@@ -32,13 +39,7 @@ class ObjectController extends Controller
 
         $this->applyFilters($builder, $request, []);
 
-        $this->applySorts(
-            $builder,
-            $request,
-            ["id"],
-            [],
-            ["id"]
-        );
+        $this->applySorts($builder, $request, ["id"], [], ["id"]);
 
         return $this->applyPagination($builder, $request);
     }
@@ -59,9 +60,13 @@ class ObjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $component = Component::firstOrCreate($data);
+
+        return new ComponentResource($component, 201);
     }
 
     /**
@@ -72,7 +77,9 @@ class ObjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $component = Component::findOrFail($id);
+
+        return new ComponentResource($component, 200);
     }
 
     /**
@@ -93,9 +100,17 @@ class ObjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        $component = Component::findOrFail($id);
+
+        $component->fill($data);
+
+        $component->save();
+
+        return new ComponentResource($component, 200);
     }
 
     /**
@@ -106,6 +121,10 @@ class ObjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $component = Component::findOrFail($id);
+
+        $component->delete();
+
+        return response(200);
     }
 }

@@ -7,6 +7,11 @@ use Illuminate\Routing\Controller;
 
 use Dclaysmith\LaravelCms\Models\Page;
 
+use Dclaysmith\LaravelCms\Http\Requests\Api\Page\UpdateRequest;
+use Dclaysmith\LaravelCms\Http\Requests\Api\Page\StoreRequest;
+
+use Dclaysmith\LaravelCms\Http\Resources\PageResource;
+
 use Dclaysmith\LaravelCms\Http\Traits\AppliesDefaults;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
@@ -34,13 +39,7 @@ class PageController extends Controller
 
         $this->applyFilters($builder, $request, []);
 
-        $this->applySorts(
-            $builder,
-            $request,
-            ["name", "title"],
-            [],
-            ["name"]
-        );
+        $this->applySorts($builder, $request, ["name", "title"], [], ["name"]);
 
         return $this->applyPagination($builder, $request);
     }
@@ -61,9 +60,13 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $page = Page::firstOrCreate($data);
+
+        return new PageResource($page, 201);
     }
 
     /**
@@ -74,7 +77,9 @@ class PageController extends Controller
      */
     public function show($id)
     {
-        return response(["id" => 1, "name" => "Privacy"]);
+        $page = Page::findOrFail($id);
+
+        return new PageResource($page, 201);
     }
 
     /**
@@ -95,9 +100,17 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $data = $request->validated();
+
+        $page = Page::findOrFail($id);
+
+        $page->fill($data);
+
+        $page->save();
+
+        return new PageResource($page, 200);
     }
 
     /**
@@ -108,6 +121,10 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $page = Page::findOrFail($id);
+
+        $page->delete();
+
+        return response(200);
     }
 }
