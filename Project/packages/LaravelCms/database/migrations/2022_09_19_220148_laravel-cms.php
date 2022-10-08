@@ -29,6 +29,9 @@ return new class extends Migration {
          */
         Schema::create("cms_components", function (Blueprint $table) {
             $table->id();
+            $table->boolean("is_global")->default(false);
+            $table->string("html")->nullable(true);
+            $table->string("view")->nullable(true);
             $table->string("body");
             $table->timestamps();
         });
@@ -58,19 +61,23 @@ return new class extends Migration {
         /**
          * Cms Page Object
          */
-        Schema::create("cms_page_components", function (Blueprint $table) {
+        Schema::create("cms_component_page", function (Blueprint $table) {
             $table->id();
             $table->foreignId("cms_page_id");
             $table->foreignId("cms_component_id");
             $table->foreignId("cms_template_section_id");
-            $table->string("html")->nullable(true);
-            $table->string("view")->nullable(true);
             $table->integer("sort_order")->nullable(true);
             $table->timestamps();
 
             $table->index("cms_page_id");
             $table->index("cms_component_id");
             $table->index("cms_template_section_id");
+
+            $table->unique([
+                "cms_page_id",
+                "cms_component_id",
+                "cms_template_section_id",
+            ]);
         });
 
         /**
@@ -84,6 +91,7 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->index("cms_page_id");
+
             $table->unique(["path"]);
         });
 
@@ -100,6 +108,8 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->index("cms_template_id");
+
+            $table->unique(["cms_template_id", "slug"]);
         });
 
         /**
@@ -112,6 +122,8 @@ return new class extends Migration {
             $table->string("slug");
             $table->string("description")->nullable(true);
             $table->timestamps();
+
+            $table->unique(["slug"]);
         });
     }
 
@@ -126,7 +138,7 @@ return new class extends Migration {
         Schema::dropIfExists("cms_template_sections");
         Schema::dropIfExists("cms_paths");
         Schema::dropIfExists("cms_components");
-        Schema::dropIfExists("cms_page_components");
+        Schema::dropIfExists("cms_component_page");
         Schema::dropIfExists("cms_pages");
         Schema::dropIfExists("cms_media");
     }

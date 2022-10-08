@@ -5,12 +5,12 @@ namespace Dclaysmith\LaravelCms\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-use Dclaysmith\LaravelCms\Models\PageComponent;
+use Dclaysmith\LaravelCms\Models\ComponentPage;
 
-use Dclaysmith\LaravelCms\Http\Requests\Api\PageComponent\UpdateRequest;
-use Dclaysmith\LaravelCms\Http\Requests\Api\PageComponent\StoreRequest;
+use Dclaysmith\LaravelCms\Http\Requests\Api\ComponentPage\UpdateRequest;
+use Dclaysmith\LaravelCms\Http\Requests\Api\ComponentPage\StoreRequest;
 
-use Dclaysmith\LaravelCms\Http\Resources\PageComponentResource;
+use Dclaysmith\LaravelCms\Http\Resources\ComponentPageResource;
 
 use Dclaysmith\LaravelCms\Http\Traits\AppliesDefaults;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
@@ -18,7 +18,7 @@ use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesPagination;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesSorts;
 
-class PageComponentController extends Controller
+class ComponentPageController extends Controller
 {
     use AppliesDefaults,
         AppliesFilters,
@@ -33,7 +33,7 @@ class PageComponentController extends Controller
      */
     public function index(Request $request)
     {
-        $builder = PageComponent::query();
+        $builder = ComponentPage::query();
 
         $this->applyIncludes($builder, $request, []);
 
@@ -70,9 +70,9 @@ class PageComponentController extends Controller
     {
         $data = $request->validated();
 
-        $pageComponent = PageComponent::firstOrCreate($data);
+        $pageComponent = ComponentPage::firstOrCreate($data);
 
-        return new PageComponentResource($pageComponent, 201);
+        return new ComponentPageResource($pageComponent, 201);
     }
 
     /**
@@ -83,9 +83,9 @@ class PageComponentController extends Controller
      */
     public function show($id)
     {
-        $pageComponent = PageComponent::findOrFail($id);
+        $pageComponent = ComponentPage::findOrFail($id);
 
-        return new PageComponentResource($pageComponent, 201);
+        return new ComponentPageResource($pageComponent, 201);
     }
 
     /**
@@ -110,13 +110,13 @@ class PageComponentController extends Controller
     {
         $data = $request->validated();
 
-        $pageComponent = PageComponent::findOrFail($id);
+        $pageComponent = ComponentPage::findOrFail($id);
 
         $pageComponent->fill($data);
 
         $pageComponent->save();
 
-        return new PageComponentResource($pageComponent, 200);
+        return new ComponentPageResource($pageComponent, 200);
     }
 
     /**
@@ -127,7 +127,7 @@ class PageComponentController extends Controller
      */
     public function destroy($id)
     {
-        $pageComponent = PageComponent::findOrFail($id);
+        $pageComponent = ComponentPage::findOrFail($id);
 
         $pageComponent->delete();
 

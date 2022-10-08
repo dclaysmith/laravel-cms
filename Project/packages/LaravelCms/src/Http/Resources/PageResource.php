@@ -17,6 +17,7 @@ class PageResource extends JsonResource
         return [
             "id" => $this->id,
             "cms_template_id" => $this->cms_template_id,
+            "template" => new TemplateResource($this->whenLoaded("template")),
             "name" => $this->name,
             "title" => $this->title,
             "meta_keywords" => $this->meta_keywords,

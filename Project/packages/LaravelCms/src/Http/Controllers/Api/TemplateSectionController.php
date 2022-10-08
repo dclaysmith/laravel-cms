@@ -18,6 +18,8 @@ use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesPagination;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesSorts;
 
+use Dclaysmith\LaravelCms\Http\Filters\Base as Filter;
+
 class TemplateSectionController extends Controller
 {
     use AppliesDefaults,
@@ -37,7 +39,12 @@ class TemplateSectionController extends Controller
 
         $this->applyIncludes($builder, $request, []);
 
-        $this->applyFilters($builder, $request, []);
+        $this->applyFilters($builder, $request, [
+            new \Dclaysmith\LaravelCms\Http\Filters\Id("cms_template_id", [
+                Filter::TYPE_EQUALS,
+                Filter::TYPE_IN,
+            ]),
+        ]);
 
         $this->applySorts($builder, $request, ["name", "slug"], [], ["name"]);
 
@@ -121,6 +128,10 @@ class TemplateSectionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $templateSection = TemplateSection::findOrFail($id);
+
+        $templateSection->delete();
+
+        return response(200);
     }
 }

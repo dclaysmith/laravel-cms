@@ -1,6 +1,6 @@
 <?php
 
-namespace Dclaysmith\LaravelCms\Http\Requests\Api\PageComponent;
+namespace Dclaysmith\LaravelCms\Http\Requests\Api\ComponentPage;
 
 use Illuminate\Foundation\Http\FormRequest;
 

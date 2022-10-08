@@ -37,4 +37,12 @@ class Template extends Model
      * @var array<string, string>
      */
     protected $casts = [];
+
+    public function templateSections()
+    {
+        return $this->hasMany(
+            \Dclaysmith\LaravelCms\Models\TemplateSection::class,
+            "cms_template_id"
+        );
+    }
 }

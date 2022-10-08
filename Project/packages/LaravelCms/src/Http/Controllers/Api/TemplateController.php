@@ -73,7 +73,7 @@ class TemplateController extends Controller
      */
     public function show($id)
     {
-        $template = Template::findOrFail($id);
+        $template = Template::with("templateSections")->findOrFail($id);
 
         return new TemplateResource($template, 200);
     }

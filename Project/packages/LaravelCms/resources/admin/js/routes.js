@@ -29,7 +29,7 @@ const routes = [
         path: "/pages/:id",
         name: "Page",
         component: Page,
-        props: true,
+        props: (route) => ({ id: parseInt(route.params.id) }),
     },
     {
         path: "/paths",
@@ -50,7 +50,7 @@ const routes = [
         path: "/templates/:id",
         name: "Template",
         component: Template,
-        props: true,
+        props: (route) => ({ id: parseInt(route.params.id) }),
     },
 ];
 

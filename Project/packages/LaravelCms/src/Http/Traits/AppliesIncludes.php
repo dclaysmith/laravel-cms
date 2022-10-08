@@ -31,7 +31,7 @@ trait AppliesIncludes
         $toApply = array_intersect($includes, $available);
         $with = [];
         foreach ($toApply as $object) {
-            if ($mapped = array_get($mappings, $object)) {
+            if ($mapped = \Arr::get($mappings, $object)) {
                 $with[] = $mapped;
             } else {
                 $with[] = $object;

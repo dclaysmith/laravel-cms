@@ -4,7 +4,7 @@ namespace Dclaysmith\LaravelCms\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PageComponentResource extends JsonResource
+class ComponentPageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

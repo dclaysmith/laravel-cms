@@ -23,7 +23,7 @@ trait AppliesFilters
             if (preg_match($pattern, $filter, $matches)) {
                 $property = $matches[1];
                 $comparator = $matches[2];
-                $value = array_get($matches, 3); // raw =2 or =2,3,4  or possibly no value
+                $value = \Arr::get($matches, 3); // raw =2 or =2,3,4  or possibly no value
 
                 // Make sure it is an allowed property
                 if (!in_array($property, $properties)) {
@@ -38,7 +38,7 @@ trait AppliesFilters
                 }
 
                 // Get the filter class using the property name (ex. type_id)
-                $filterObject = array_first($availableFilters, function (
+                $filterObject = \Arr::first($availableFilters, function (
                     $availableFilter,
                     $key
                 ) use ($property) {

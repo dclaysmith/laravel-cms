@@ -1,13 +1,15 @@
 <template>
     <form @submit.prevent="onSubmit">
         <fieldset>
+            <legend>Add Section</legend>
             <p>
                 <label for="name">Name</label>
                 <input
                     type="text"
                     name="name"
                     id="name"
-                    v-model="newTemplate.name"
+                    v-model="newTemplateSection.name"
+                    required
                 />
             </p>
             <p>
@@ -16,10 +18,10 @@
                     type="text"
                     name="slug"
                     id="slug"
-                    v-model="newTemplate.slug"
+                    v-model="newTemplateSection.slug"
                 />
             </p>
-            <p><button :disabled="!valid">Add Template</button></p>
+            <p><button :disabled="!valid">Add Template Section</button></p>
         </fieldset>
     </form>
 </template>
@@ -29,18 +31,18 @@
 import { ref, computed } from "vue";
 
 export default {
-    name: "LaravelCmsAdminTemplateAddForm",
+    name: "LaravelCmsAdminTemplateSectionAddForm",
     components: {},
     emits: ["add"],
     setup(props, { emit }) {
-        const newTemplate = ref({});
+        const newTemplateSection = ref({});
 
         async function onSubmit() {
             if (!this.valid) {
                 return;
             }
-            emit("add", newTemplate.value);
-            newTemplate.value = {};
+            emit("add", newTemplateSection.value);
+            newTemplateSection.value = {};
         }
 
         /**
@@ -48,11 +50,12 @@ export default {
          */
         const valid = computed(() => {
             return (
-                newTemplate.value.name != null && newTemplate.value.slug != null
+                newTemplateSection.value.name != null &&
+                newTemplateSection.value.slug != null
             );
         });
 
-        return { newTemplate, onSubmit, valid };
+        return { newTemplateSection, onSubmit, valid };
     },
 };
 </script>

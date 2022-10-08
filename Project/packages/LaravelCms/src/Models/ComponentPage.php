@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class PageComponent extends Model
+class ComponentPage extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class PageComponent extends Model
      *
      * @var string
      */
-    protected $table = "cms_page_components";
+    protected $table = "cms_component_page";
 
     /**
      * The attributes that are mass assignable.

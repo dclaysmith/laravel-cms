@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="https://unpkg.com/mvp.css@1.11/mvp.css">
 </head>
 <body>
-    <div id="app"></div>
+    <div id="admin-dev"></div>
 	@vite('packages/LaravelCms/resources/admin/js/admin.js')
 </body>
 </html>

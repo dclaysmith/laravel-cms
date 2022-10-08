@@ -16,11 +16,12 @@ class StoreRequest extends FormRequest
             ],
             "name" => ["required", "max:255"],
             "title" => ["required", "max:255"],
-            "meta_keyworkds" => ["sometimes", "nullable", "max:255"],
+            "meta_keywords" => ["sometimes", "nullable", "max:255"],
             "meta_description" => ["sometimes", "nullable", "max:1000"],
             "body" => ["sometimes", "nullable"],
             "path" => ["sometimes", "max:255"],
             "allow_index" => ["sometimes", "boolean"],
+            "cms_template_id" => ["sometimes", "exists:cms_templates,id"],
         ];
     }
 }

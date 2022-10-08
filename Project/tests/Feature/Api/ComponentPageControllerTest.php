@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
 
-class PageComponentControllerTest extends TestCase
+class ComponentPageControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -17,7 +17,7 @@ class PageComponentControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $response = $this->get("/api/cms-page-components");
+        $response = $this->get("/api/cms-component-page");
 
         $response->assertStatus(200);
     }
@@ -52,7 +52,7 @@ class PageComponentControllerTest extends TestCase
             ]
         );
 
-        $response = $this->post("/api/cms-page-components", [
+        $response = $this->post("/api/cms-component-page", [
             "cms_page_id" => $page->id,
             "cms_component_id" => $component->id,
             "cms_template_section_id" => $templateSection->id,
@@ -106,14 +106,14 @@ class PageComponentControllerTest extends TestCase
             ]
         );
 
-        $existing = \Dclaysmith\LaravelCms\Models\PageComponent::create([
+        $existing = \Dclaysmith\LaravelCms\Models\ComponentPage::create([
             "cms_page_id" => $page->id,
             "cms_component_id" => $component->id,
             "cms_template_section_id" => $templateSection->id,
             "html" => "html...",
         ]);
 
-        $response = $this->put("/api/cms-page-components/" . $existing->id, [
+        $response = $this->put("/api/cms-component-page/" . $existing->id, [
             "html" => "new html...",
         ]);
 
@@ -164,14 +164,14 @@ class PageComponentControllerTest extends TestCase
             ]
         );
 
-        $existing = \Dclaysmith\LaravelCms\Models\PageComponent::create([
+        $existing = \Dclaysmith\LaravelCms\Models\ComponentPage::create([
             "cms_page_id" => $page->id,
             "cms_component_id" => $component->id,
             "cms_template_section_id" => $templateSection->id,
             "html" => "html...",
         ]);
 
-        $response = $this->delete("/api/cms-page-components/" . $existing->id);
+        $response = $this->delete("/api/cms-component-page/" . $existing->id);
 
         $response->assertStatus(200);
     }

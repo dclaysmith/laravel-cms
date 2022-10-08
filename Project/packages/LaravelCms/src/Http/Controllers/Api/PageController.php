@@ -77,7 +77,10 @@ class PageController extends Controller
      */
     public function show($id)
     {
-        $page = Page::findOrFail($id);
+        $page = Page::with([
+            "template",
+            "template.templateSections",
+        ])->findOrFail($id);
 
         return new PageResource($page, 201);
     }
@@ -109,6 +112,8 @@ class PageController extends Controller
         $page->fill($data);
 
         $page->save();
+
+        $page->load(["template", "template.templateSections"]);
 
         return new PageResource($page, 200);
     }

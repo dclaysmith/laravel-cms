@@ -29,6 +29,7 @@ class Page extends Model
         "meta_description",
         "path",
         "allow_index",
+        "cms_template_id",
     ];
 
     /**
@@ -44,4 +45,20 @@ class Page extends Model
      * @var array<string, string>
      */
     protected $casts = [];
+
+    public function template()
+    {
+        return $this->belongsTo(
+            \Dclaysmith\LaravelCms\Models\Template::class,
+            "cms_template_id"
+        );
+    }
+
+    // public function components()
+    // {
+    //     return $this->belongsTo(
+    //         \Dclaysmith\LaravelCms\Models\ComponentPage::class,
+    //         "cms_template_id"
+    //     );
+    // }
 }

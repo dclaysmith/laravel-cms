@@ -11,7 +11,11 @@ class StoreRequest extends FormRequest
         return [
             "cms_template_id" => ["required", "exists:cms_templates,id"],
             "name" => ["required", "max:255"],
-            "slug" => ["required", "max:255"],
+            "slug" => [
+                "required",
+                "max:255",
+                "unique:cms_template_sections,slug",
+            ],
             "description" => ["sometimes", "nullable"],
         ];
     }

@@ -1,10 +1,9 @@
 <template>
-    <p><router-link to="/templates">Back</router-link></p>
+    <p><router-link to="/templates">&lt; Back</router-link></p>
+    <h2>Edit Template</h2>
     <form @submit.prevent="onSubmit">
         <fieldset v-if="template">
-            <legend>
-                Edit Template: {{ template.name }} #{{ template.id }}
-            </legend>
+            <legend>Edit Template</legend>
             <p>
                 <label for="name">Name</label>
                 <input
@@ -24,22 +23,27 @@
                 />
             </p>
             <p>
-                <label for="body">Body</label>
+                <label for="description">Description</label>
                 <input
                     type="text"
-                    name="body"
-                    id="body"
-                    v-model="template.body"
+                    name="description"
+                    id="description"
+                    v-model="template.description"
                 />
             </p>
             <p v-if="saveEnabled"><button>Update</button></p>
         </fieldset>
     </form>
-    <template-sections></template-sections>
+    <h2>Template Sections</h2>
+    <form>
+        <template-sections :template-id="id"></template-sections>
+    </form>
 </template>
 
 <script>
 import { ref, computed } from "vue";
+import { notify } from "@kyvg/vue3-notification";
+
 import TemplateSections from "./sections/index.vue";
 
 export default {
@@ -62,6 +66,7 @@ export default {
             template.value = json.data;
             templateOriginal.value = Object.assign({}, template.value);
         }
+
         async function onSubmit() {
             const response = await fetch("/api/cms-templates/" + props.id, {
                 headers: {
@@ -71,15 +76,30 @@ export default {
                 method: "PUT",
                 body: JSON.stringify(template.value),
             });
+
             const json = await response.json();
+
+            if (!response.ok) {
+                notify({
+                    title: json.message,
+                    type: "error",
+                });
+                return;
+            }
+
             template.value = json.data;
             templateOriginal.value = Object.assign({}, template.value);
+
+            notify({
+                title: "Template updated.",
+                type: "success",
+            });
         }
 
         fetchTemplate();
 
         /**
-         * Updated
+         * Computed Properties
          */
         const saveEnabled = computed(() => {
             return (

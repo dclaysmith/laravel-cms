@@ -1,21 +1,24 @@
 <template>
-    <template v-if="templates">
-        <add-form @created="onCreated"></add-form>
-        <table v-if="loaded && templates.length">
-            <list-item
-                v-for="template in templates"
-                :key="template.id"
-                :template="template"
-            ></list-item>
-        </table>
-        <p v-else-if="loaded">There are no templates.</p>
-        <p v-else>Loading...</p>
-    </template>
+    <h2>Add Template</h2>
+    <add-form @add="onAdd"></add-form>
+    <h2>Existing Templates</h2>
+    <table v-if="loaded && templatesSorted.length">
+        <list-item
+            v-for="template in templatesSorted"
+            :key="template.id"
+            :template="template"
+            @delete="onDelete"
+        ></list-item>
+    </table>
+    <p v-else-if="loaded">There are no templates.</p>
+    <p v-else>Loading...</p>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { notify } from "@kyvg/vue3-notification";
+import { useRouter } from "vue-router";
+import { sortBy as _sortBy } from "lodash";
 
 import ListItem from "./list-item.vue";
 import AddForm from "./add-form.vue";
@@ -27,6 +30,8 @@ export default {
         AddForm,
     },
     setup(props, { emit }) {
+        const router = useRouter();
+
         /**
          * Reactive Properties
          */
@@ -42,19 +47,80 @@ export default {
             templates.value = json.data;
             loaded.value = true;
         }
-        async function onCreated(template) {
-            templates.value.push(template);
+
+        async function onAdd(template) {
+            const response = await fetch("/api/cms-templates", {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                method: "POST",
+                body: JSON.stringify(template),
+            });
+
+            const json = await response.json();
+
+            if (!response.ok) {
+                notify({
+                    title: json.message,
+                    type: "error",
+                });
+                return;
+            }
+
+            templates.value.push(json.data);
+
             notify({
                 title: "New template created.",
+                type: "success",
             });
+
+            router.push("/templates/" + json.data.id);
+        }
+
+        async function onDelete(id) {
+            const response = await fetch("/api/cms-templates/" + id, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                method: "DELETE",
+            });
+            if (!response.ok) {
+                notify({
+                    title: json.message,
+                    type: "error",
+                });
+                return;
+            }
+
+            notify({
+                title: "Template deleted.",
+                type: "warn",
+            });
+
+            var indexToRemove = templates.value
+                .map((item) => item.id)
+                .indexOf(id);
+            ~indexToRemove && templates.value.splice(indexToRemove, 1);
         }
 
         fetchTemplateList();
 
+        /**
+         * Updated
+         */
+        const templatesSorted = computed(() => {
+            return _sortBy(templates.value || [], (template) => {
+                return template.name;
+            });
+        });
+
         return {
+            templatesSorted,
             loaded,
-            templates,
-            onCreated,
+            onAdd,
+            onDelete,
         };
     },
 };

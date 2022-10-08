@@ -6,6 +6,10 @@
                 template.name
             }}</router-link>
         </td>
+        <td>{{ template.slug }}</td>
+        <td>
+            <a href="#" @click.prevent="onDeleteClick">Delete</a>
+        </td>
     </tr>
 </template>
 
@@ -15,8 +19,13 @@ import { ref } from "vue";
 export default {
     name: "LaravelCmsAdminTemplatesListItem",
     props: ["template"],
-    setup() {
-        return {};
+    emits: ["delete"],
+    setup(props, { emit }) {
+        async function onDeleteClick() {
+            emit("delete", props.template.id);
+        }
+
+        return { onDeleteClick };
     },
 };
 </script>

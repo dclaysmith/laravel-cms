@@ -4,7 +4,7 @@ namespace Dclaysmith\LaravelCms\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RenderResource extends JsonResource
+class ViewResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,12 +14,6 @@ class RenderResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            "id" => $this->id,
-            "name",
-            "meta" => ["title", "meta_keywords", "meta_description"],
-            "sections" => [],
-            "components" => [],
-        ];
+        return [];
     }
 }

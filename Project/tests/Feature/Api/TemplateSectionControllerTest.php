@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Api;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class TemplateSectionControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic test example.
      *
@@ -14,7 +16,7 @@ class TemplateSectionControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $response = $this->get('/api/cms-template-sections');
+        $response = $this->get("/api/cms-template-sections");
 
         $response->assertStatus(200);
     }
@@ -103,7 +105,9 @@ class TemplateSectionControllerTest extends TestCase
             "description" => "About my template section...",
         ]);
 
-        $response = $this->delete("/api/cms-template-sections/" . $existing->id);
+        $response = $this->delete(
+            "/api/cms-template-sections/" . $existing->id
+        );
 
         $response->assertStatus(200);
     }
