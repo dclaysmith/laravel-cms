@@ -5,7 +5,7 @@ namespace Tests\Feature\Api;
 // use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class RenderControllerTest extends TestCase
+class ViewControllerTest extends TestCase
 {
     /**
      * A basic test example.
@@ -14,7 +14,7 @@ class RenderControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $response = $this->post("/api/cms-render?some=param&more=stuff");
+        $response = $this->get("/api/cms-views");
 
         dd($response->getContent());
 

@@ -1,1 +1,0 @@
-<p>A Blade Template</p>

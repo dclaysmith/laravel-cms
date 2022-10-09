@@ -7,27 +7,43 @@ use Illuminate\Routing\Controller;
 
 use Dclaysmith\LaravelCms\Http\Resources\ViewResource;
 
-use Dclaysmith\LaravelCms\Http\Traits\AppliesDefaults;
-use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
-use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
-use Dclaysmith\LaravelCms\Http\Traits\AppliesPagination;
-use Dclaysmith\LaravelCms\Http\Traits\AppliesSorts;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ViewController extends Controller
 {
-    use AppliesDefaults,
-        AppliesFilters,
-        AppliesIncludes,
-        AppliesPagination,
-        AppliesSorts;
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($request)
+    public function index(Request $request)
     {
-        return response(["status" => "ok"]);
+        /**
+         * Retrieve all of the views in the designated folder
+         */
+        $viewDirectory = config(
+            "services.laravel-cms.component-directory",
+            "app/View/Vendor/LaravelCms/Client"
+        );
+
+        $views = [];
+        foreach (new \DirectoryIterator($viewDirectory) as $file) {
+            if ($file->isFile()) {
+                $views[] = $file->getFilename();
+            }
+        }
+
+        $page = (int) $request->get("page", $default = 1);
+        $perPage = (int) $request->get("per_page", $default = 25);
+        $offset = $page * $perPage - $perPage;
+
+        return new LengthAwarePaginator(
+            array_slice($views, $offset, $perPage),
+            count($views),
+            $perPage,
+            $page
+        );
     }
 }

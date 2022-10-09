@@ -27,6 +27,11 @@ class RenderController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        return response(["status"=>"ok"]);
+        $view1 = new \App\View\Vendor\LaravelCms\Client\ExampleOne($request);
+        $view2 = new \App\View\Vendor\LaravelCms\Client\ExampleTwo($request);
+
+        dd($view2->render());
+
+        return response(["status" => "ok"]);
     }
 }

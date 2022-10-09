@@ -1,19 +1,21 @@
 <?php
 
-namespace Dclaysmith\LaravelCms\View\Components;
+namespace App\View\Vendor\LaravelCms\UserDefined;
 
 use Illuminate\View\Component;
 
-class ExampleHtmlComponent extends Component
+class ExampleWithoutTemplate extends Component
 {
+    var $request;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($request)
     {
-        //
+        $this->request = $request;
     }
 
     /**
@@ -23,6 +25,9 @@ class ExampleHtmlComponent extends Component
      */
     public function render()
     {
-        return '<p>This is an example of a blade-less component.</p>';
+        $request = json_encode($this->request->all());
+        return <<<eof
+{$request}  
+eof;
     }
 }
