@@ -1,17 +1,31 @@
 <template>
     <fieldset>
-        <legend>{{ section.name }}</legend>
-        <p>
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" v-model="section.name" />
-        </p>
-        <p>
-            <label for="slug">Slug</label>
-            <input type="text" name="slug" id="slug" v-model="section.slug" />
-        </p>
-        <p>
-            <a @click.prevent="onDeleteClick">Delete</a>
-        </p>
+        <div class="form-group form-inline mx-2">
+            <label class="form-label" for="name">Name</label>
+            <input
+                class="form-input"
+                type="text"
+                name="name"
+                id="name"
+                v-model="section.name"
+            />
+        </div>
+        <div class="form-group form-inline mx-2">
+            <label class="form-label" for="slug">Slug</label>
+            <input
+                class="form-input"
+                type="text"
+                name="slug"
+                id="slug"
+                v-model="section.slug"
+            />
+        </div>
+        <button
+            class="btn btn-link text-error mx-2"
+            @click.prevent="onDeleteClick"
+        >
+            Delete
+        </button>
     </fieldset>
 </template>
 

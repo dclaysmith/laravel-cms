@@ -2,6 +2,8 @@
 
 namespace Dclaysmith\LaravelCms\Http\Filters;
 
+use Dclaysmith\LaravelCms\Exceptions\InvalidFilter;
+
 class Date extends Base
 {
     public function apply(&$builder, $comparator, $value)
@@ -21,7 +23,7 @@ class Date extends Base
         }
 
         if (is_null($value) || "" === $value) {
-            throw new \App\Exceptions\Api\InvalidFilter(
+            throw new InvalidFilter(
                 "Null value provided: " . $value,
                 0 // RETURN A USEFUL CODE HERE
             );
@@ -29,7 +31,7 @@ class Date extends Base
 
         $date = \DateTime::createFromFormat("Y-m-d", $value);
         if (!($date && $date->format("Y-m-d") === $value)) {
-            throw new \App\Exceptions\Api\InvalidFilter(
+            throw new InvalidFilter(
                 "Non date (YYYY-mm-dd) value provided: " . $value,
                 0 // RETURN A USEFUL CODE HERE
             );

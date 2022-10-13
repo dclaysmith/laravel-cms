@@ -2,7 +2,7 @@
     <h2>Add Template</h2>
     <add-form @add="onAdd"></add-form>
     <h2>Existing Templates</h2>
-    <table v-if="loaded && templatesSorted.length">
+    <table class="table" v-if="loaded && templatesSorted.length">
         <list-item
             v-for="template in templatesSorted"
             :key="template.id"

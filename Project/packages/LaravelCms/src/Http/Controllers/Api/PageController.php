@@ -18,6 +18,8 @@ use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesPagination;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesSorts;
 
+use Dclaysmith\LaravelCms\Http\Filters\Base as Filter;
+
 class PageController extends Controller
 {
     use AppliesDefaults,
@@ -78,6 +80,7 @@ class PageController extends Controller
     public function show($id)
     {
         $page = Page::with([
+            "components",
             "template",
             "template.templateSections",
         ])->findOrFail($id);
@@ -113,7 +116,7 @@ class PageController extends Controller
 
         $page->save();
 
-        $page->load(["template", "template.templateSections"]);
+        $page->load(["components", "template", "template.templateSections"]);
 
         return new PageResource($page, 200);
     }

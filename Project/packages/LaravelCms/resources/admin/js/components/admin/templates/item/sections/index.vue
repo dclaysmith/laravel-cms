@@ -1,7 +1,8 @@
 <template>
     <fieldset v-if="sectionsSorted">
-        <legend>Sections</legend>
         <add-form @add="onAdd"></add-form>
+        <div class="divider"></div>
+
         <div v-if="loaded && sectionsSorted.length">
             <list-item
                 v-for="section in sectionsSorted"

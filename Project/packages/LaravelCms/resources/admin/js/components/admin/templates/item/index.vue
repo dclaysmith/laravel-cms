@@ -3,35 +3,37 @@
     <h2>Edit Template</h2>
     <form @submit.prevent="onSubmit">
         <fieldset v-if="template">
-            <legend>Edit Template</legend>
-            <p>
-                <label for="name">Name</label>
+            <div class="form-group form-inline mx-2">
+                <label class="form-label" for="name">Name</label>
                 <input
+                    class="form-input"
                     type="text"
                     name="name"
                     id="name"
                     v-model="template.name"
                 />
-            </p>
-            <p>
-                <label for="slug">Slug</label>
+            </div>
+            <div class="form-group form-inline mx-2">
+                <label class="form-label" for="slug">Slug</label>
                 <input
+                    class="form-input"
                     type="text"
                     name="slug"
                     id="slug"
                     v-model="template.slug"
                 />
-            </p>
-            <p>
-                <label for="description">Description</label>
+            </div>
+            <div class="form-group form-inline mx-2">
+                <label class="form-label" for="description">Description</label>
                 <input
+                    class="form-input"
                     type="text"
                     name="description"
                     id="description"
                     v-model="template.description"
                 />
-            </p>
-            <p v-if="saveEnabled"><button>Update</button></p>
+            </div>
+            <button class="btn btn-link mx-2" v-if="saveEnabled">Update</button>
         </fieldset>
     </form>
     <h2>Template Sections</h2>

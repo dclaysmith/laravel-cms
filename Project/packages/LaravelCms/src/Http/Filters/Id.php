@@ -4,6 +4,7 @@ namespace Dclaysmith\LaravelCms\Http\Filters;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Dclaysmith\LaravelCms\Exceptions\InvalidFilter;
 
 class Id extends Base
 {
@@ -13,7 +14,7 @@ class Id extends Base
         switch ($comparator) {
             case Base::TYPE_EQUALS:
                 if (!is_numeric($value)) {
-                    throw new \App\Exceptions\Api\InvalidFilter(
+                    throw new InvalidFilter(
                         "Non numeric value provided: " . $value,
                         0 // RETURN A USEFUL CODE HERE
                     );
@@ -22,7 +23,7 @@ class Id extends Base
                 break;
             case Base::TYPE_NOT_EQUALS:
                 if (!is_numeric($value)) {
-                    throw new \App\Exceptions\Api\InvalidFilter(
+                    throw new InvalidFilter(
                         "Non numeric value provided: " . $value,
                         0 // RETURN A USEFUL CODE HERE
                     );
@@ -34,13 +35,13 @@ class Id extends Base
                 break;
             case Base::TYPE_IN:
                 if (!is_array($value)) {
-                    throw new \Exception("The value should be an array.");
+                    throw new InvalidFilter("The value should be an array.");
                 }
                 $builder->whereIn($this->property(), $value); // <= array
                 break;
             case Base::TYPE_NOT_IN:
                 if (!is_array($value)) {
-                    throw new \Exception("The value should be an array.");
+                    throw new InvalidFilter("The value should be an array.");
                 }
                 $builder->whereNotIn($this->property(), $value); // <= array
                 break;

@@ -1,6 +1,7 @@
 <?php
 
 namespace Dclaysmith\LaravelCms\Http\Filters;
+use Dclaysmith\LaravelCms\Exceptions\InvalidFilter;
 
 class Text extends Base
 {

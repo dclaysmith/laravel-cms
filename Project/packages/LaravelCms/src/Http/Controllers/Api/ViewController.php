@@ -11,6 +11,8 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+use Dclaysmith\LaravelCms\Http\Filters\Base as Filter;
+
 class ViewController extends Controller
 {
     /**
@@ -25,7 +27,7 @@ class ViewController extends Controller
          */
         $viewDirectory = config(
             "services.laravel-cms.component-directory",
-            "app/View/Vendor/LaravelCms/Client"
+            "../app/View/Components/Vendor/LaravelCms/UserDefined"
         );
 
         $views = [];

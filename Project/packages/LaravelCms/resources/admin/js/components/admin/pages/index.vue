@@ -2,7 +2,7 @@
     <h2>Add Page</h2>
     <add-form @add="onAdd"></add-form>
     <h2>Existing Pages</h2>
-    <table v-if="loaded && pagesSorted.length">
+    <table class="table" v-if="loaded && pagesSorted.length">
         <list-item
             v-for="page in pagesSorted"
             :key="page.id"
@@ -106,7 +106,7 @@ export default {
         fetchPageList();
 
         /**
-         * Updated
+         * Computed
          */
         const pagesSorted = computed(() => {
             return _sortBy(pages.value || [], (page) => {

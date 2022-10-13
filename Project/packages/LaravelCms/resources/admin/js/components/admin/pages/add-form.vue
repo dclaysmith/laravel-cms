@@ -1,34 +1,39 @@
 <template>
     <form @submit.prevent="onSubmit">
         <fieldset>
-            <p>
-                <label for="name">Name</label>
+            <div class="form-group form-inline mx-2">
+                <label class="form-label" for="name">Name</label>
                 <input
+                    class="form-input"
                     type="text"
                     name="name"
                     id="name"
                     v-model="newPage.name"
                 />
-            </p>
-            <p>
-                <label for="slug">Title</label>
+            </div>
+            <div class="form-group form-inline mx-2">
+                <label class="form-label" for="slug">Title</label>
                 <input
+                    class="form-input"
                     type="text"
                     name="title"
                     id="title"
                     v-model="newPage.title"
                 />
-            </p>
-            <p>
-                <label for="path">Path</label>
+            </div>
+            <div class="form-group form-inline mx-2">
+                <label class="form-label" for="path">Path</label>
                 <input
+                    class="form-input"
                     type="text"
                     name="path"
                     id="path"
                     v-model="newPage.path"
                 />
-            </p>
-            <p><button :disabled="!valid">Add Page</button></p>
+            </div>
+            <button class="mx-2 btn btn-link" :disabled="!valid">
+                Add Page
+            </button>
         </fieldset>
     </form>
 </template>
@@ -53,7 +58,7 @@ export default {
         }
 
         /**
-         * Updated
+         * Computed
          */
         const valid = computed(() => {
             return (

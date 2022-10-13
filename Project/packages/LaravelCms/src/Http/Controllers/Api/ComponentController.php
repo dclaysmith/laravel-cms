@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 use Dclaysmith\LaravelCms\Models\Component;
+use Dclaysmith\LaravelCms\Models\ComponentPage;
 
 use Dclaysmith\LaravelCms\Http\Requests\Api\Component\UpdateRequest;
 use Dclaysmith\LaravelCms\Http\Requests\Api\Component\StoreRequest;
@@ -17,6 +18,8 @@ use Dclaysmith\LaravelCms\Http\Traits\AppliesFilters;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesPagination;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesSorts;
+
+use Dclaysmith\LaravelCms\Http\Filters\Base as Filter;
 
 class ComponentController extends Controller
 {
@@ -37,7 +40,12 @@ class ComponentController extends Controller
 
         $this->applyIncludes($builder, $request, []);
 
-        $this->applyFilters($builder, $request, []);
+        $this->applyFilters($builder, $request, [
+            new \Dclaysmith\LaravelCms\Http\Filters\Boolean("is_global", [
+                Filter::TYPE_EQUALS,
+                Filter::TYPE_IN,
+            ]),
+        ]);
 
         $this->applySorts($builder, $request, ["id"], [], ["id"]);
 
@@ -65,6 +73,28 @@ class ComponentController extends Controller
         $data = $request->validated();
 
         $component = Component::firstOrCreate($data);
+
+        /**
+         * if a page is provided
+         */
+        if (\Arr::get($data, "cms_page_id")) {
+            $componentPage = ComponentPage::firstOrCreate([
+                "cms_component_id" => $component->id,
+                "cms_page_id" => \Arr::get($data, "cms_page_id"),
+                "cms_template_section_id" => \Arr::get(
+                    $data,
+                    "cms_template_section_id"
+                ),
+            ]);
+            // $component->pages()->sync([
+            //     \Arr::get($data, "cms_page_id") => [
+            //         "cms_template_section_id" => \Arr::get(
+            //             $data,
+            //             "cms_template_section_id"
+            //         ),
+            //     ],
+            // ]);
+        }
 
         return new ComponentResource($component, 201);
     }

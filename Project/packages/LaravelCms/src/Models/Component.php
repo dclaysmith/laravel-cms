@@ -22,9 +22,7 @@ class Component extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        "body",
-    ];
+    protected $fillable = ["is_global", "html", "view", "name"];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -39,4 +37,14 @@ class Component extends Model
      * @var array<string, string>
      */
     protected $casts = [];
+
+    public function pages()
+    {
+        return $this->belongsToMany(
+            \Dclaysmith\LaravelCms\Models\Page::class,
+            "cms_component_page",
+            "cms_component_id",
+            "cms_page_id"
+        )->withPivot("cms_template_section_id");
+    }
 }

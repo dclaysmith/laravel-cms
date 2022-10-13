@@ -16,7 +16,22 @@ class ComponentResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "body" => $this->body,
+            "is_global" => (bool) $this->is_global,
+            "name" => $this->name,
+            "html" => $this->html,
+            "view" => $this->view,
+            "cms_page_id" => $this->whenPivotLoaded(
+                "cms_component_page",
+                function () {
+                    return (int) $this->pivot->cms_page_id;
+                }
+            ),
+            "cms_template_section_id" => $this->whenPivotLoaded(
+                "cms_component_page",
+                function () {
+                    return (int) $this->pivot->cms_template_section_id;
+                }
+            ),
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
         ];

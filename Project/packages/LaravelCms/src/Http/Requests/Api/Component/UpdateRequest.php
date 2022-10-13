@@ -9,7 +9,10 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "body" => ["sometimes"],
+            "is_global" => ["sometimes", "boolean"],
+            "name" => ["sometimes", "required", "max:255"],
+            "html" => ["sometimes", "required_without:view"],
+            "view" => ["sometimes", "required_without:html"],
         ];
     }
 }

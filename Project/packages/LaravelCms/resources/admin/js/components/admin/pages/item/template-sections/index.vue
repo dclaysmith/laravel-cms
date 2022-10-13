@@ -1,11 +1,11 @@
 <template>
     <form>
         <fieldset>
-            <legend>Sections</legend>
             <list-item
                 v-for="templateSection in templateSections"
                 :key="templateSection.id"
                 :template-section="templateSection"
+                :components="components"
             ></list-item>
         </fieldset>
     </form>
@@ -22,6 +22,9 @@ export default {
     },
     props: ["templateSections", "components"],
     setup(props, { emit }) {
+        /**
+         * Methods
+         */
         return {};
     },
 };

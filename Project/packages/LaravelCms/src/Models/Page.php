@@ -54,11 +54,13 @@ class Page extends Model
         );
     }
 
-    // public function components()
-    // {
-    //     return $this->belongsTo(
-    //         \Dclaysmith\LaravelCms\Models\ComponentPage::class,
-    //         "cms_template_id"
-    //     );
-    // }
+    public function components()
+    {
+        return $this->belongsToMany(
+            \Dclaysmith\LaravelCms\Models\Component::class,
+            "cms_component_page",
+            "cms_page_id",
+            "cms_component_id"
+        )->withPivot("cms_template_section_id");
+    }
 }

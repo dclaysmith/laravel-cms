@@ -18,6 +18,8 @@ use Dclaysmith\LaravelCms\Http\Traits\AppliesIncludes;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesPagination;
 use Dclaysmith\LaravelCms\Http\Traits\AppliesSorts;
 
+use Dclaysmith\LaravelCms\Http\Filters\Base as Filter;
+
 class TemplateController extends Controller
 {
     use AppliesDefaults,
