@@ -6,9 +6,14 @@
                 template.name
             }}</router-link>
         </td>
-        <td>{{ template.slug }}</td>
+        <td>{{ template.identifier }}</td>
         <td>
-            <a href="#" @click.prevent="onDeleteClick">Delete</a>
+            <button
+                @click.prevent="onDeleteClick"
+                class="btn btn-link text-error"
+            >
+                Delete
+            </button>
         </td>
     </tr>
 </template>

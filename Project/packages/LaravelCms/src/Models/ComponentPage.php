@@ -44,4 +44,20 @@ class ComponentPage extends Model
      * @var array<string, string>
      */
     protected $casts = [];
+
+    public function component()
+    {
+        return $this->belongsTo(
+            \Dclaysmith\LaravelCms\Models\Component::class,
+            "cms_component_id"
+        );
+    }
+
+    public function page()
+    {
+        return $this->belongsTo(
+            \Dclaysmith\LaravelCms\Models\Page::class,
+            "cms_page_id"
+        );
+    }
 }

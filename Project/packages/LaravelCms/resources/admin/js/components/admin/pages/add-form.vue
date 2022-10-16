@@ -12,14 +12,33 @@
                 />
             </div>
             <div class="form-group form-inline mx-2">
-                <label class="form-label" for="slug">Title</label>
+                <label class="form-label" for="title">Title</label>
                 <input
                     class="form-input"
                     type="text"
                     name="title"
                     id="title"
+                    @blur="onTitleBlur"
                     v-model="newPage.title"
                 />
+            </div>
+            <div class="form-group form-inline mx-2">
+                <label class="form-label" for="template">Template</label>
+                <select
+                    class="form-select"
+                    name="template"
+                    id="template"
+                    v-model.number="newPage.cms_template_id"
+                >
+                    <option></option>
+                    <option
+                        v-for="template in templates"
+                        :key="template.id"
+                        :value="template.id"
+                    >
+                        {{ template.name }}
+                    </option>
+                </select>
             </div>
             <div class="form-group form-inline mx-2">
                 <label class="form-label" for="path">Path</label>
@@ -48,7 +67,16 @@ export default {
     emits: ["add"],
     setup(props, { emit }) {
         const newPage = ref({});
+        const templates = ref([]);
 
+        /**
+         * Methods
+         */
+        async function fetchTemplateList() {
+            const response = await fetch("/api/cms-templates");
+            const json = await response.json();
+            templates.value = json.data;
+        }
         async function onSubmit() {
             if (!this.valid) {
                 return;
@@ -57,6 +85,20 @@ export default {
             newPage.value = {};
         }
 
+        function onTitleBlur() {
+            if (newPage.value.path) {
+                return;
+            }
+            newPage.value.path =
+                "/" +
+                newPage.value.title
+                    .toLowerCase()
+                    .replace(/[^\w ]+/g, "")
+                    .replace(/ +/g, "-");
+        }
+
+        fetchTemplateList();
+
         /**
          * Computed
          */
@@ -64,11 +106,12 @@ export default {
             return (
                 newPage.value.name != null &&
                 newPage.value.title != null &&
-                newPage.value.path != null
+                newPage.value.path != null &&
+                newPage.value.cms_template_id != null
             );
         });
 
-        return { newPage, onSubmit, valid };
+        return { newPage, templates, onSubmit, onTitleBlur, valid };
     },
 };
 </script>

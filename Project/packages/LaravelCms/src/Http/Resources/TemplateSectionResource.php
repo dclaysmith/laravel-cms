@@ -18,7 +18,7 @@ class TemplateSectionResource extends JsonResource
             "id" => (int) $this->id,
             "cms_template_id" => (int) $this->cms_template_id,
             "name" => $this->name,
-            "slug" => $this->slug,
+            "identifier" => $this->identifier,
             "description" => $this->description,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,

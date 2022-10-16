@@ -11,13 +11,13 @@
             />
         </div>
         <div class="form-group form-inline mx-2">
-            <label class="form-label" for="slug">Slug</label>
+            <label class="form-label" for="identifier">Slug</label>
             <input
                 class="form-input"
                 type="text"
-                name="slug"
-                id="slug"
-                v-model="section.slug"
+                name="identifier"
+                id="identifier"
+                v-model="section.identifier"
             />
         </div>
         <button

@@ -25,7 +25,7 @@ class TemplateControllerTest extends TestCase
     {
         $response = $this->post("/api/cms-templates", [
             "name" => "donkey",
-            "slug" => "donkey",
+            "identifier" => "donkey",
         ]);
 
         $responseArray = (array) json_decode($response->content());
@@ -34,7 +34,7 @@ class TemplateControllerTest extends TestCase
             "data" => [
                 "id",
                 "name",
-                "slug",
+                "identifier",
                 "description",
                 "created_at",
                 "updated_at",
@@ -48,13 +48,13 @@ class TemplateControllerTest extends TestCase
     {
         $existing = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 
         $response = $this->put("/api/cms-templates/" . $existing->id, [
             "name" => "My Template New Name",
-            "slug" => "my-template-new-slug",
+            "identifier" => "my-template-new-identifier",
             "description" => "More about my template...",
         ]);
 
@@ -64,7 +64,7 @@ class TemplateControllerTest extends TestCase
             "data" => [
                 "id",
                 "name",
-                "slug",
+                "identifier",
                 "description",
                 "created_at",
                 "updated_at",
@@ -78,7 +78,7 @@ class TemplateControllerTest extends TestCase
     {
         $existing = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 

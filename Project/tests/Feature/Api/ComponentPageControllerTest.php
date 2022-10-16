@@ -26,7 +26,7 @@ class ComponentPageControllerTest extends TestCase
     {
         $template = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 
@@ -40,14 +40,15 @@ class ComponentPageControllerTest extends TestCase
         ]);
 
         $component = \Dclaysmith\LaravelCms\Models\Component::create([
-            "body" => "Boy...",
+            "name" => "name...",
+            "html" => "Boy...",
         ]);
 
         $templateSection = \Dclaysmith\LaravelCms\Models\TemplateSection::create(
             [
                 "cms_template_id" => $template->id,
                 "name" => "My Template",
-                "slug" => "my-template",
+                "identifier" => "my-template",
                 "description" => "About my template...",
             ]
         );
@@ -56,7 +57,6 @@ class ComponentPageControllerTest extends TestCase
             "cms_page_id" => $page->id,
             "cms_component_id" => $component->id,
             "cms_template_section_id" => $templateSection->id,
-            "html" => "html...",
         ]);
 
         $responseArray = (array) json_decode($response->content());
@@ -67,7 +67,6 @@ class ComponentPageControllerTest extends TestCase
                 "cms_page_id",
                 "cms_component_id",
                 "cms_template_section_id",
-                "html",
                 "created_at",
                 "updated_at",
             ],
@@ -80,7 +79,7 @@ class ComponentPageControllerTest extends TestCase
     {
         $template = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 
@@ -94,15 +93,25 @@ class ComponentPageControllerTest extends TestCase
         ]);
 
         $component = \Dclaysmith\LaravelCms\Models\Component::create([
-            "body" => "Boy...",
+            "name" => "name...",
+            "html" => "Boy...",
         ]);
 
         $templateSection = \Dclaysmith\LaravelCms\Models\TemplateSection::create(
             [
                 "cms_template_id" => $template->id,
                 "name" => "My Template",
-                "slug" => "my-template",
+                "identifier" => "my-template",
                 "description" => "About my template...",
+            ]
+        );
+
+        $templateSection2 = \Dclaysmith\LaravelCms\Models\TemplateSection::create(
+            [
+                "cms_template_id" => $template->id,
+                "name" => "My Template New Section",
+                "identifier" => "my-template-also",
+                "description" => "MOre About my template...",
             ]
         );
 
@@ -110,11 +119,10 @@ class ComponentPageControllerTest extends TestCase
             "cms_page_id" => $page->id,
             "cms_component_id" => $component->id,
             "cms_template_section_id" => $templateSection->id,
-            "html" => "html...",
         ]);
 
         $response = $this->put("/api/cms-component-page/" . $existing->id, [
-            "html" => "new html...",
+            "cms_template_section_id" => $templateSection2->id,
         ]);
 
         $responseArray = (array) json_decode($response->content());
@@ -125,7 +133,6 @@ class ComponentPageControllerTest extends TestCase
                 "cms_page_id",
                 "cms_component_id",
                 "cms_template_section_id",
-                "html",
                 "created_at",
                 "updated_at",
             ],
@@ -138,7 +145,7 @@ class ComponentPageControllerTest extends TestCase
     {
         $template = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 
@@ -152,14 +159,15 @@ class ComponentPageControllerTest extends TestCase
         ]);
 
         $component = \Dclaysmith\LaravelCms\Models\Component::create([
-            "body" => "Boy...",
+            "name" => "name...",
+            "html" => "Boy...",
         ]);
 
         $templateSection = \Dclaysmith\LaravelCms\Models\TemplateSection::create(
             [
                 "cms_template_id" => $template->id,
                 "name" => "My Template",
-                "slug" => "my-template",
+                "identifier" => "my-template",
                 "description" => "About my template...",
             ]
         );
@@ -168,10 +176,54 @@ class ComponentPageControllerTest extends TestCase
             "cms_page_id" => $page->id,
             "cms_component_id" => $component->id,
             "cms_template_section_id" => $templateSection->id,
-            "html" => "html...",
         ]);
 
         $response = $this->delete("/api/cms-component-page/" . $existing->id);
+
+        $response->assertStatus(200);
+    }
+
+    public function testDeleteByLookup()
+    {
+        $template = \Dclaysmith\LaravelCms\Models\Template::create([
+            "name" => "My Template",
+            "identifier" => "my-template",
+            "description" => "About my template...",
+        ]);
+
+        $page = \Dclaysmith\LaravelCms\Models\Page::create([
+            "cms_template_id" => $template->id,
+            "name" => "My Page",
+            "title" => "My Title",
+            "meta_keywords" => "keywords..",
+            "meta_description" => "description..",
+            "path" => "/path",
+        ]);
+
+        $component = \Dclaysmith\LaravelCms\Models\Component::create([
+            "name" => "name...",
+            "html" => "Boy...",
+        ]);
+
+        $templateSection = \Dclaysmith\LaravelCms\Models\TemplateSection::create(
+            [
+                "cms_template_id" => $template->id,
+                "name" => "My Template",
+                "identifier" => "my-template",
+                "description" => "About my template...",
+            ]
+        );
+
+        $existing = \Dclaysmith\LaravelCms\Models\ComponentPage::create([
+            "cms_page_id" => $page->id,
+            "cms_component_id" => $component->id,
+            "cms_template_section_id" => $templateSection->id,
+        ]);
+
+        $response = $this->delete("/api/cms-component-page", [
+            "cms_page_id" => $page->id,
+            "cms_component_id" => $component->id,
+        ]);
 
         $response->assertStatus(200);
     }

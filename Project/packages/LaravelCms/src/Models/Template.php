@@ -22,7 +22,7 @@ class Template extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ["name", "slug", "description"];
+    protected $fillable = ["name", "identifier", "description"];
 
     /**
      * The attributes that should be hidden for serialization.

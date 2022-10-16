@@ -5,10 +5,12 @@ namespace Dclaysmith\LaravelCms\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+use Dclaysmith\LaravelCms\Models\Component;
 use Dclaysmith\LaravelCms\Models\ComponentPage;
 
 use Dclaysmith\LaravelCms\Http\Requests\Api\ComponentPage\UpdateRequest;
 use Dclaysmith\LaravelCms\Http\Requests\Api\ComponentPage\StoreRequest;
+use Dclaysmith\LaravelCms\Http\Requests\Api\ComponentPage\DeleteByLookupRequest;
 
 use Dclaysmith\LaravelCms\Http\Resources\ComponentPageResource;
 
@@ -74,6 +76,8 @@ class ComponentPageController extends Controller
 
         $pageComponent = ComponentPage::firstOrCreate($data);
 
+        $pageComponent->load(["page", "component"]);
+
         return new ComponentPageResource($pageComponent, 201);
     }
 
@@ -132,6 +136,21 @@ class ComponentPageController extends Controller
         $pageComponent = ComponentPage::findOrFail($id);
 
         $pageComponent->delete();
+
+        return response(200);
+    }
+
+    public function deleteByLookup(DeleteByLookupRequest $request)
+    {
+        /**
+         * If the components aren't global we need to delete them
+         */
+        Component::where([
+            "id" => $request->input("cms_component_id"),
+            "is_global" => 0,
+        ])->delete();
+
+        ComponentPage::where($request->all())->delete();
 
         return response(200);
     }

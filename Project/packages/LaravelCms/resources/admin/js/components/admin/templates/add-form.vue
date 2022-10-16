@@ -12,13 +12,13 @@
                 />
             </div>
             <div class="form-group form-inline mx-2">
-                <label class="form-label" for="slug">Slug</label>
+                <label class="form-label" for="identifier">Identifier</label>
                 <input
                     class="form-input"
                     type="text"
-                    name="slug"
-                    id="slug"
-                    v-model="newTemplate.slug"
+                    name="identifier"
+                    id="identifier"
+                    v-model="newTemplate.identifier"
                 />
             </div>
             <button class="btn btn-primary mx-2" :disabled="!valid">
@@ -52,7 +52,8 @@ export default {
          */
         const valid = computed(() => {
             return (
-                newTemplate.value.name != null && newTemplate.value.slug != null
+                newTemplate.value.name != null &&
+                newTemplate.value.identifier != null
             );
         });
 

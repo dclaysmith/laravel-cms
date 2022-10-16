@@ -37,7 +37,7 @@ class PageController extends Controller
     {
         $builder = Page::query();
 
-        $this->applyIncludes($builder, $request, []);
+        $this->applyIncludes($builder, $request, ["template"]);
 
         $this->applyFilters($builder, $request, []);
 
@@ -68,6 +68,8 @@ class PageController extends Controller
 
         $page = Page::firstOrCreate($data);
 
+        $page->load(["template", "components", "template.templateSections"]);
+
         return new PageResource($page, 201);
     }
 
@@ -80,8 +82,8 @@ class PageController extends Controller
     public function show($id)
     {
         $page = Page::with([
-            "components",
             "template",
+            "components",
             "template.templateSections",
         ])->findOrFail($id);
 
@@ -116,7 +118,7 @@ class PageController extends Controller
 
         $page->save();
 
-        $page->load(["components", "template", "template.templateSections"]);
+        $page->load(["template", "components", "template.templateSections"]);
 
         return new PageResource($page, 200);
     }

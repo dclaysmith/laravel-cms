@@ -1,17 +1,21 @@
 <template>
     <fieldset>
-        <legend>Section: {{ templateSection.name }}</legend>
+        <legend>
+            Section: {{ templateSection.name }} {{ templateSection.id }}
+        </legend>
         <component
             v-for="component in includedComponents"
             :key="component.id"
             :component="component"
+            @edit="onEdit"
+            @delete="onDelete"
         ></component>
     </fieldset>
 </template>
 
 <script>
 import { ref, computed } from "vue";
-import Component from "./component/index.vue";
+import Component from "../component-preview.vue";
 import { sortBy as _sortBy, filter as _filter, chain as _chain } from "lodash";
 
 export default {
@@ -21,6 +25,16 @@ export default {
         Component,
     },
     setup(props, { emit }) {
+        /**
+         * Methods
+         */
+        async function onEdit(component) {
+            emit("select", component);
+        }
+        function onDelete(component) {
+            emit("delete", component);
+        }
+
         const includedComponents = computed(() => {
             const filtered = _filter(props.components, (component) => {
                 return (
@@ -33,6 +47,8 @@ export default {
 
         return {
             includedComponents,
+            onEdit,
+            onDelete,
         };
     },
 };

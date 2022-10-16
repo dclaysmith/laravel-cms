@@ -78,14 +78,18 @@ class ComponentController extends Controller
          * if a page is provided
          */
         if (\Arr::get($data, "cms_page_id")) {
-            $componentPage = ComponentPage::firstOrCreate([
-                "cms_component_id" => $component->id,
-                "cms_page_id" => \Arr::get($data, "cms_page_id"),
-                "cms_template_section_id" => \Arr::get(
-                    $data,
-                    "cms_template_section_id"
-                ),
-            ]);
+            $componentPage = ComponentPage::firstOrCreate(
+                [
+                    "cms_component_id" => $component->id,
+                    "cms_page_id" => \Arr::get($data, "cms_page_id"),
+                ],
+                [
+                    "cms_template_section_id" => \Arr::get(
+                        $data,
+                        "cms_template_section_id"
+                    ),
+                ]
+            );
             // $component->pages()->sync([
             //     \Arr::get($data, "cms_page_id") => [
             //         "cms_template_section_id" => \Arr::get(
@@ -139,6 +143,21 @@ class ComponentController extends Controller
         $component->fill($data);
 
         $component->save();
+
+        if (\Arr::get($data, "cms_page_id")) {
+            $componentPage = ComponentPage::updateOrCreate(
+                [
+                    "cms_component_id" => $component->id,
+                    "cms_page_id" => \Arr::get($data, "cms_page_id"),
+                ],
+                [
+                    "cms_template_section_id" => \Arr::get(
+                        $data,
+                        "cms_template_section_id"
+                    ),
+                ]
+            );
+        }
 
         return new ComponentResource($component, 200);
     }

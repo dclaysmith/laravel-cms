@@ -3,6 +3,14 @@
     <add-form @add="onAdd"></add-form>
     <h2>Existing Pages</h2>
     <table class="table" v-if="loaded && pagesSorted.length">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Path</th>
+            <th>Template</th>
+            <th></th>
+        </tr>
         <list-item
             v-for="page in pagesSorted"
             :key="page.id"
@@ -42,7 +50,12 @@ export default {
          * Methods
          */
         async function fetchPageList() {
-            const response = await fetch("/api/cms-pages");
+            let url =
+                "/api/cms-pages?" +
+                new URLSearchParams({
+                    "include[]": ["template"],
+                }).toString();
+            const response = await fetch(url);
             const json = await response.json();
             pages.value = json.data;
             loaded.value = true;

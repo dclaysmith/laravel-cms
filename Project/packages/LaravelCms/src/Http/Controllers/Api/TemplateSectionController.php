@@ -46,7 +46,13 @@ class TemplateSectionController extends Controller
             ]),
         ]);
 
-        $this->applySorts($builder, $request, ["name", "slug"], [], ["name"]);
+        $this->applySorts(
+            $builder,
+            $request,
+            ["name", "identifier"],
+            [],
+            ["name"]
+        );
 
         return $this->applyPagination($builder, $request);
     }

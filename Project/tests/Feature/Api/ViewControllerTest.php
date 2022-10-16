@@ -14,9 +14,14 @@ class ViewControllerTest extends TestCase
      */
     public function testIndex()
     {
+        \Config::set(
+            "services.laravel-cms.component-directory",
+            "./app/View/Components/Vendor/LaravelCms/UserDefined"
+        );
+
         $response = $this->get("/api/cms-views");
 
-        dd($response->getContent());
+        // dd($response->getContent());
 
         $response->assertStatus(200);
     }

@@ -25,14 +25,14 @@ class TemplateSectionControllerTest extends TestCase
     {
         $existingTemplate = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 
         $response = $this->post("/api/cms-template-sections", [
             "cms_template_id" => $existingTemplate->id,
             "name" => "donkey",
-            "slug" => "donkey",
+            "identifier" => "donkey",
         ]);
 
         $responseArray = (array) json_decode($response->content());
@@ -42,7 +42,7 @@ class TemplateSectionControllerTest extends TestCase
                 "id",
                 "cms_template_id",
                 "name",
-                "slug",
+                "identifier",
                 "description",
                 "created_at",
                 "updated_at",
@@ -56,20 +56,20 @@ class TemplateSectionControllerTest extends TestCase
     {
         $existingTemplate = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 
         $existing = \Dclaysmith\LaravelCms\Models\TemplateSection::create([
             "cms_template_id" => $existingTemplate->id,
             "name" => "My Template Section",
-            "slug" => "my-template-section",
+            "identifier" => "my-template-section",
             "description" => "About my template section...",
         ]);
 
         $response = $this->put("/api/cms-template-sections/" . $existing->id, [
             "name" => "My Template Section New Name",
-            "slug" => "my-template-section-new-slug",
+            "identifier" => "my-template-section-new-identifier",
             "description" => "More about my template section...",
         ]);
 
@@ -80,7 +80,7 @@ class TemplateSectionControllerTest extends TestCase
                 "id",
                 "cms_template_id",
                 "name",
-                "slug",
+                "identifier",
                 "description",
                 "created_at",
                 "updated_at",
@@ -94,14 +94,14 @@ class TemplateSectionControllerTest extends TestCase
     {
         $existingTemplate = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 
         $existing = \Dclaysmith\LaravelCms\Models\TemplateSection::create([
             "cms_template_id" => $existingTemplate->id,
             "name" => "My Template Section",
-            "slug" => "my-template-section",
+            "identifier" => "my-template-section",
             "description" => "About my template section...",
         ]);
 

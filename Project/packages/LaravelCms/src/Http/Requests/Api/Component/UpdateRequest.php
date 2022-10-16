@@ -13,6 +13,13 @@ class UpdateRequest extends FormRequest
             "name" => ["sometimes", "required", "max:255"],
             "html" => ["sometimes", "required_without:view"],
             "view" => ["sometimes", "required_without:html"],
+
+            /** Adding to Page Component **/
+            "cms_page_id" => ["sometimes", "exists:cms_pages,id"],
+            "cms_template_section_id" => [
+                "sometimes",
+                "exists:cms_template_sections,id",
+            ],
         ];
     }
 }

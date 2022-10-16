@@ -27,22 +27,22 @@
                 </select>
             </div>
 
+            <div class="form-group mx-2">
+                <label class="form-label" for="name">Name</label>
+                <input
+                    class="form-input"
+                    type="text"
+                    name="name"
+                    id="name"
+                    v-model="component.name"
+                />
+            </div>
+
             <template
                 v-if="
                     'new-text' == component.type || 'new-view' == component.type
                 "
             >
-                <div class="form-group mx-2">
-                    <label class="form-label" for="name">Name</label>
-                    <input
-                        class="form-input"
-                        type="text"
-                        name="name"
-                        id="name"
-                        v-model="component.name"
-                    />
-                </div>
-
                 <!-- NEW PAGE -->
                 <template v-if="'new-text' == component.type">
                     <div class="form-group mx-2">
@@ -153,11 +153,8 @@ export default {
             }
 
             /** Are we adding an existing or creating a new **/
-            if ("new-text" == component.type || "new-view" == component.type) {
-                emit("add", component);
-            } else {
-                emit("add", component);
-            }
+            emit("add", component);
+
             Object.assign(component, componentInitialState);
         }
 

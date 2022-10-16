@@ -14,13 +14,13 @@
                 />
             </div>
             <div class="form-group form-inline mx-2">
-                <label class="form-label" for="slug">Slug</label>
+                <label class="form-label" for="identifier">Identifier</label>
                 <input
                     class="form-input"
                     type="text"
-                    name="slug"
-                    id="slug"
-                    v-model="newTemplateSection.slug"
+                    name="identifier"
+                    id="identifier"
+                    v-model="newTemplateSection.identifier"
                 />
             </div>
             <button class="btn btn-link mx-2" :disabled="!valid">
@@ -55,7 +55,7 @@ export default {
         const valid = computed(() => {
             return (
                 newTemplateSection.value.name != null &&
-                newTemplateSection.value.slug != null
+                newTemplateSection.value.identifier != null
             );
         });
 

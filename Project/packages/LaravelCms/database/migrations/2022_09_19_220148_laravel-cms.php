@@ -119,13 +119,13 @@ return new class extends Migration {
                 ->constrained()
                 ->onDelete("CASCADE");
             $table->string("name");
-            $table->string("slug");
+            $table->string("identifier");
             $table->string("description")->nullable(true);
             $table->timestamps();
 
             $table->index("cms_template_id");
 
-            $table->unique(["cms_template_id", "slug"]);
+            $table->unique(["cms_template_id", "identifier"]);
         });
 
         /**
@@ -135,11 +135,11 @@ return new class extends Migration {
         Schema::create("cms_templates", function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("slug");
+            $table->string("identifier");
             $table->string("description")->nullable(true);
             $table->timestamps();
 
-            $table->unique(["slug"]);
+            $table->unique(["identifier"]);
         });
     }
 
@@ -150,10 +150,10 @@ return new class extends Migration {
      */
     public function down()
     {
+        Schema::dropIfExists("cms_component_page"); // put this above components b/d sql error
         Schema::dropIfExists("cms_templates");
         Schema::dropIfExists("cms_template_sections");
         Schema::dropIfExists("cms_paths");
-        Schema::dropIfExists("cms_component_page"); // put this above components b/d sql error
         Schema::dropIfExists("cms_components");
         Schema::dropIfExists("cms_pages");
         Schema::dropIfExists("cms_media");

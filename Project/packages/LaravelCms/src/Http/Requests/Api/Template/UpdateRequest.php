@@ -10,11 +10,11 @@ class UpdateRequest extends FormRequest
     {
         return [
             "name" => ["sometimes", "required", "max:255"],
-            "slug" => [
+            "identifier" => [
                 "sometimes",
                 "required",
                 "max:255",
-                "unique:cms_templates,slug," . $this->id,
+                "unique:cms_templates,identifier," . $this->id,
             ],
             "description" => ["sometimes", "nullable"],
         ];

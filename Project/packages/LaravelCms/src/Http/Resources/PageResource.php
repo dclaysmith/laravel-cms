@@ -15,8 +15,8 @@ class PageResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "id" => $this->id,
-            "cms_template_id" => $this->cms_template_id,
+            "id" => (int) $this->id,
+            "cms_template_id" => (int) $this->cms_template_id,
             "components" => ComponentResource::collection(
                 $this->whenLoaded("components")
             ),

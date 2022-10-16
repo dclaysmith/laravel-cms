@@ -22,7 +22,12 @@ class TemplateSection extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ["cms_template_id", "name", "slug", "description"];
+    protected $fillable = [
+        "cms_template_id",
+        "name",
+        "identifier",
+        "description",
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

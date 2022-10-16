@@ -25,7 +25,7 @@ class PageControllerTest extends TestCase
     {
         $template = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 
@@ -60,7 +60,7 @@ class PageControllerTest extends TestCase
     {
         $template = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 
@@ -104,7 +104,7 @@ class PageControllerTest extends TestCase
     {
         $template = \Dclaysmith\LaravelCms\Models\Template::create([
             "name" => "My Template",
-            "slug" => "my-template",
+            "identifier" => "my-template",
             "description" => "About my template...",
         ]);
 

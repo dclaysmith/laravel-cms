@@ -11,7 +11,15 @@
             {{ page.path }}
         </td>
         <td>
-            <a href="#" @click.prevent="onDeleteClick">Delete</a>
+            {{ page.template?.name }}
+        </td>
+        <td>
+            <button
+                @click.prevent="onDeleteClick"
+                class="btn btn-link text-error"
+            >
+                Delete
+            </button>
         </td>
     </tr>
 </template>

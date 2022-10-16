@@ -14,13 +14,13 @@
                 />
             </div>
             <div class="form-group form-inline mx-2">
-                <label class="form-label" for="slug">Slug</label>
+                <label class="form-label" for="identifier">Identifier</label>
                 <input
                     class="form-input"
                     type="text"
-                    name="slug"
-                    id="slug"
-                    v-model="template.slug"
+                    name="identifier"
+                    id="identifier"
+                    v-model="template.identifier"
                 />
             </div>
             <div class="form-group form-inline mx-2">
@@ -33,7 +33,9 @@
                     v-model="template.description"
                 />
             </div>
-            <button class="btn btn-link mx-2" v-if="saveEnabled">Update</button>
+            <button class="btn btn-link mx-2" :disabled="!saveEnabled">
+                Update
+            </button>
         </fieldset>
     </form>
     <h2>Template Sections</h2>

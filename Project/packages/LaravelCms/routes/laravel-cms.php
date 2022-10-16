@@ -14,6 +14,10 @@ use Dclaysmith\LaravelCms\Http\Controllers\Api\ViewController;
 
 Route::middleware("web")->group(function () {
     Route::group(["prefix" => "api"], function () {
+        Route::delete("cms-component-page", [
+            ComponentPageController::class,
+            "deleteByLookup",
+        ]);
         Route::resource("cms-component-page", ComponentPageController::class);
         Route::resource("cms-components", ComponentController::class);
         Route::resource("cms-media", MediaController::class);

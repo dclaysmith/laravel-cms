@@ -20,6 +20,12 @@ class ComponentResource extends JsonResource
             "name" => $this->name,
             "html" => $this->html,
             "view" => $this->view,
+            "cms_component_page_id" => $this->whenPivotLoaded(
+                "cms_component_page",
+                function () {
+                    return (int) $this->pivot->id;
+                }
+            ),
             "cms_page_id" => $this->whenPivotLoaded(
                 "cms_component_page",
                 function () {

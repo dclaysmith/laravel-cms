@@ -6,6 +6,8 @@
                 :key="templateSection.id"
                 :template-section="templateSection"
                 :components="components"
+                @select="onSelect"
+                @delete="onDelete"
             ></list-item>
         </fieldset>
     </form>
@@ -25,7 +27,14 @@ export default {
         /**
          * Methods
          */
-        return {};
+        async function onSelect(component) {
+            emit("select", component);
+        }
+        function onDelete(component) {
+            emit("delete", component);
+        }
+
+        return { onSelect, onDelete };
     },
 };
 </script>

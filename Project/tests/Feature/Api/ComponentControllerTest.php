@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Api;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ComponentControllerTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic test example.
      *
@@ -22,13 +24,14 @@ class ComponentControllerTest extends TestCase
     public function testStore()
     {
         $response = $this->post("/api/cms-components", [
-            "body" => "donkey",
+            "html" => "donkey",
+            "name" => "donkey",
         ]);
 
         $responseArray = (array) json_decode($response->content());
 
         $response->assertJsonStructure([
-            "data" => ["id", "body", "created_at", "updated_at"],
+            "data" => ["id", "name", "html", "created_at", "updated_at"],
         ]);
 
         $response->assertStatus(201);
@@ -37,17 +40,19 @@ class ComponentControllerTest extends TestCase
     public function testUpdate()
     {
         $existing = \Dclaysmith\LaravelCms\Models\Component::create([
-            "body" => "Boy...",
+            "name" => "donkey",
+            "html" => "donkey",
         ]);
 
         $response = $this->put("/api/cms-components/" . $existing->id, [
-            "body" => "new body",
+            "name" => "donkey",
+            "html" => "new donkey",
         ]);
 
         $responseArray = (array) json_decode($response->content());
 
         $response->assertJsonStructure([
-            "data" => ["id", "body", "created_at", "updated_at"],
+            "data" => ["id", "name", "html", "created_at", "updated_at"],
         ]);
 
         $response->assertStatus(200);
@@ -56,7 +61,8 @@ class ComponentControllerTest extends TestCase
     public function testDelete()
     {
         $existing = \Dclaysmith\LaravelCms\Models\Component::create([
-            "body" => "Body...",
+            "name" => "donkey",
+            "html" => "new donkey",
         ]);
 
         $response = $this->delete("/api/cms-components/" . $existing->id);

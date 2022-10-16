@@ -16,7 +16,7 @@ class RenderControllerTest extends TestCase
     {
         $response = $this->post("/api/cms-render?some=param&more=stuff");
 
-        dd($response->getContent());
+        // dd($response->getContent());
 
         $response->assertStatus(200);
     }
