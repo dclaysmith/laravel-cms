@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit" v-if="templates.length">
         <fieldset>
             <div class="form-group form-inline mx-2">
                 <label class="form-label" for="name">Name</label>
@@ -55,6 +55,11 @@
             </button>
         </fieldset>
     </form>
+    <p v-else>
+        You must set up
+        <router-link to="/templates">templates</router-link> before adding a
+        page.
+    </p>
 </template>
 
 

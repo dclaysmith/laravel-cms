@@ -1,15 +1,18 @@
 <template>
-    <h2>Components</h2>
     <add-form @add="onAdd"></add-form>
-    <table class="table" v-if="loaded && componentsSorted.length">
+    <table class="table" v-if="loaded && pathsSorted.length">
+        <tr>
+            <th>Id</th>
+            <th colspan="2">Path</th>
+        </tr>
         <list-item
-            v-for="template in componentsSorted"
-            :key="template.id"
-            :template="template"
+            v-for="path in pathsSorted"
+            :key="path.id"
+            :path="path"
             @delete="onDelete"
         ></list-item>
     </table>
-    <p v-else-if="loaded">There are no components.</p>
+    <p v-else-if="loaded">There are no paths.</p>
     <p v-else>Loading...</p>
 </template>
 
@@ -22,36 +25,41 @@ import ListItem from "./list-item.vue";
 import AddForm from "./add-form.vue";
 
 export default {
-    name: "LaravelCmsAdminComponents",
+    name: "LaravelCmsAdminPaths",
     components: {
         ListItem,
         AddForm,
     },
+    props: ["page"],
     setup(props, { emit }) {
         /**
          * Reactive Properties
          */
-        const components = ref([]);
+        const paths = ref([]);
         const loaded = ref(false);
 
         /**
          * Methods
          */
-        async function fetchComponentList() {
-            const response = await fetch("/api/cms-components");
+        async function fetchPathList() {
+            const response = await fetch(
+                "/api/cms-paths?cms_page_id=" + props.page.id
+            );
             const json = await response.json();
-            components.value = json.data;
+            paths.value = json.data;
             loaded.value = true;
         }
 
-        async function onAdd(component) {
-            const response = await fetch("/api/cms-components", {
+        async function onAdd(path) {
+            path.cms_page_id = props.page.id;
+
+            const response = await fetch("/api/cms-paths", {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
                 method: "POST",
-                body: JSON.stringify(template),
+                body: JSON.stringify(path),
             });
 
             const json = await response.json();
@@ -64,18 +72,16 @@ export default {
                 return;
             }
 
-            components.value.push(json.data);
-
             notify({
-                title: "New component added.",
+                title: "New path added.",
                 type: "success",
             });
 
-            components.value.push(Object.assign(component, json.data));
+            paths.value.push(Object.assign(path, json.data));
         }
 
         async function onDelete(id) {
-            const response = await fetch("/api/cms-components/" + id, {
+            const response = await fetch("/api/cms-paths/" + id, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -91,29 +97,27 @@ export default {
             }
 
             notify({
-                title: "Template deleted.",
+                title: "Path deleted.",
                 type: "warn",
             });
 
-            var indexToRemove = components.value
-                .map((item) => item.id)
-                .indexOf(id);
-            ~indexToRemove && components.value.splice(indexToRemove, 1);
+            var indexToRemove = paths.value.map((item) => item.id).indexOf(id);
+            ~indexToRemove && paths.value.splice(indexToRemove, 1);
         }
 
-        fetchComponentList();
+        fetchPathList();
 
         /**
          * Updated
          */
-        const componentsSorted = computed(() => {
-            return _sortBy(components.value || [], (component) => {
-                return component.component;
+        const pathsSorted = computed(() => {
+            return _sortBy(paths.value || [], (path) => {
+                return path.path;
             });
         });
 
         return {
-            componentsSorted,
+            pathsSorted,
             loaded,
             onAdd,
             onDelete,

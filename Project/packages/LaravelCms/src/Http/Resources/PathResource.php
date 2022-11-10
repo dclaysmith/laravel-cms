@@ -16,8 +16,8 @@ class PathResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "cms_page_id" => $this->cms_page_id,
-            "path" => $this->name,
+            "cms_page_id" => (int) $this->cms_page_id,
+            "path" => $this->path,
             "description" => $this->description,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,

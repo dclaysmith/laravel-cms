@@ -1,9 +1,8 @@
 <template>
     <tr>
         <td>{{ path.id }}</td>
-        <td>{{ path.cms_page_id }}</td>
         <td>
-            <router-link :to="'/paths/' + path.id">{{ path.path }}</router-link>
+            {{ path.path }}
         </td>
         <td>
             <button
@@ -18,7 +17,7 @@
 
 <script>
 export default {
-    name: "LaravelCmsAdminPagesListItem",
+    name: "LaravelCmsAdminPagePathsListItem",
     props: ["path"],
     setup(props, { emit }) {
         async function onDeleteClick() {
