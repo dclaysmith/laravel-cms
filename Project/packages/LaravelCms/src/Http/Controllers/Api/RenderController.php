@@ -50,10 +50,10 @@ class RenderController extends Controller
         // Page attributes
         $response->name = $page->name;
         $response->title = $page->title;
-        $response->metaKeywords = $page->meta_keywords;
-        $response->metaDescription = $page->meta_description;
+        $response->meta_keywords = $page->meta_keywords;
+        $response->meta_description = $page->meta_description;
         $response->path = $page->path;
-        $response->allowIndex = $page->allow_index;
+        $response->allow_index = $page->allow_index;
 
         // Assemble the sections, we'll add the rendered HTML below
         $sections = [];
@@ -77,7 +77,7 @@ class RenderController extends Controller
                 $sections[$index]["html"] .= $component->render($request);
             }
         }
-        $response->templateSections = $sections;
+        $response->template_sections = $sections;
 
         return new JsonResource((array) $response, 201);
     }

@@ -3,9 +3,9 @@
     <add-form @add="onAdd"></add-form>
     <table class="table" v-if="loaded && componentsSorted.length">
         <list-item
-            v-for="template in componentsSorted"
-            :key="template.id"
-            :template="template"
+            v-for="component in componentsSorted"
+            :key="component.id"
+            :component="component"
             @delete="onDelete"
         ></list-item>
     </table>
@@ -38,7 +38,12 @@ export default {
          * Methods
          */
         async function fetchComponentList() {
-            const response = await fetch("/api/cms-components");
+            let url =
+                "/api/cms-components?" +
+                new URLSearchParams({
+                    "q[]": ["is_global[eq]=TRUE"],
+                }).toString();
+            const response = await fetch(url);
             const json = await response.json();
             components.value = json.data;
             loaded.value = true;

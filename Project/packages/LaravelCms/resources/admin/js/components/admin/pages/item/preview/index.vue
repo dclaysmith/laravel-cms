@@ -1,4 +1,4 @@
-<template>PREVIEW OUTPUT</template>
+<template>{{ page }}</template>
 
 <script>
 import { ref } from "vue";
@@ -8,6 +8,8 @@ export default {
     props: ["page"],
     components: {},
     setup(props, { emit }) {
+        const page = ref(null);
+
         async function fetchPreview() {
             const response = await fetch("/api/cms-render/" + props.page.id, {
                 headers: {
@@ -17,11 +19,12 @@ export default {
                 method: "POST",
             });
             const json = await response.json();
+            page.value = json.data;
         }
 
         fetchPreview();
 
-        return {};
+        return { page };
     },
 };
 </script>

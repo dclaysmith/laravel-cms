@@ -4,7 +4,7 @@
         <tr>
             <th>Id</th>
             <th>Page Id</th>
-            <th>Path</th>
+            <th colspan="2">Path</th>
         </tr>
         <list-item
             v-for="path in pathsSorted"

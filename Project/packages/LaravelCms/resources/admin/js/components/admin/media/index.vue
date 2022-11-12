@@ -3,9 +3,9 @@
     <add-form @add="onAdd"></add-form>
     <table class="table" v-if="loaded && mediaSorted.length">
         <list-item
-            v-for="template in mediaSorted"
-            :key="template.id"
-            :template="template"
+            v-for="media in mediaSorted"
+            :key="media.id"
+            :media="media"
             @delete="onDelete"
         ></list-item>
     </table>
