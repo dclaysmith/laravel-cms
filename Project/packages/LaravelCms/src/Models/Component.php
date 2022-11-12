@@ -47,4 +47,17 @@ class Component extends Model
             "cms_page_id"
         )->withPivot("cms_template_section_id");
     }
+
+    public function render($request)
+    {
+        if ($this->view) {
+            $viewClass =
+                "\\App\\View\\Components\\Vendor\\LaravelCms\\UserDefined\\" .
+                str_replace(".php", "", $this->view);
+            $view = new $viewClass($request);
+            return $view->render();
+        } else {
+            return $this->html;
+        }
+    }
 }

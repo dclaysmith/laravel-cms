@@ -30,7 +30,7 @@ Route::middleware("web")->group(function () {
         );
         Route::resource("cms-views", ViewController::class);
         Route::middleware("guest")->group(function () {
-            Route::post("/cms-render", [RenderController::class, "store"]);
+            Route::post("/cms-render/{id}", [RenderController::class, "store"]);
         });
     });
 });

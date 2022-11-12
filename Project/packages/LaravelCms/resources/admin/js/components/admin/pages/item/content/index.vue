@@ -72,7 +72,7 @@ export default {
                     },
                     method: "POST",
                     body: JSON.stringify({
-                        cms_page_id: props.id,
+                        cms_page_id: props.page.id,
                         cms_component_id: component.type,
                         cms_template_section_id:
                             component.cms_template_section_id,
@@ -104,7 +104,7 @@ export default {
             /**
              * Append some data
              */
-            component.cms_page_id = props.id;
+            component.cms_page_id = props.page.id;
             component.is_global = false;
 
             const response = await fetch("/api/cms-components", {
@@ -153,7 +153,7 @@ export default {
                 },
                 method: "DELETE",
                 body: JSON.stringify({
-                    cms_page_id: props.id,
+                    cms_page_id: props.page.id,
                     cms_component_id: component.id,
                 }),
             });
@@ -183,7 +183,7 @@ export default {
             /**
              * Append some data
              */
-            component.cms_page_id = props.id;
+            component.cms_page_id = props.page.id;
 
             const response = await fetch(
                 "/api/cms-components/" + component.id,

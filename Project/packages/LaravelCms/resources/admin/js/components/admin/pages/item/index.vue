@@ -44,7 +44,7 @@
             :templates="templates"
         ></page-paths>
         <page-content v-if="'content' == tab" :page="page"> </page-content>
-        <template v-if="'preview' == tab" :page="page"> PREVIEW </template>
+        <page-preview v-if="'preview' == tab" :page="page"> </page-preview>
     </template>
 </template>
 
@@ -55,6 +55,7 @@ import { sortBy as _sortBy, filter as _filter, chain as _chain } from "lodash";
 
 import PagePaths from "./paths/index.vue";
 import PageContent from "./content/index.vue";
+import PagePreview from "./preview/index.vue";
 import MainForm from "./main-form.vue";
 import SeoForm from "./seo-form.vue";
 
@@ -63,6 +64,7 @@ export default {
     components: {
         PageContent,
         PagePaths,
+        PagePreview,
         MainForm,
         SeoForm,
     },

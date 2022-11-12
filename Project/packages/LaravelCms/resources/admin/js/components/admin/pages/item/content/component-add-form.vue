@@ -153,7 +153,7 @@ export default {
             }
 
             /** Are we adding an existing or creating a new **/
-            emit("add", component);
+            emit("add", Object.assign({}, component));
 
             Object.assign(component, componentInitialState);
         }

@@ -61,6 +61,8 @@ class Page extends Model
             "cms_component_page",
             "cms_page_id",
             "cms_component_id"
-        )->withPivot("cms_template_section_id");
+        )
+            ->orderByPivot("sort_order")
+            ->withPivot("cms_template_section_id");
     }
 }
