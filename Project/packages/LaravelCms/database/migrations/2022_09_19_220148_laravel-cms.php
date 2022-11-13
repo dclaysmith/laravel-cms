@@ -142,27 +142,27 @@ return new class extends Migration {
             $table->unique(["identifier"]);
         });
 
-        //         \DB::unprepared('
-        // DROP TRIGGER IF EXISTS add_path_to_paths;
-        // CREATE TRIGGER add_path_to_paths
-        //     AFTER UPDATE ON cms_pages
-        //     WHEN old.path <> new.path
-        //     BEGIN
-        //         INSERT INTO cms_paths (
-        //             cms_page_id,
-        //             path,
-        //             created_at,
-        //             updated_at
-        //         )
-        //             VALUES
-        //         (
-        //             new.id,
-        //             old.path,
-        //             CURRENT_TIMESTAMP,
-        //             CURRENT_TIMESTAMP
-        //         ) ON CONFLICT IGNORE;
-        //     END;
-        // ');
+        \DB::unprepared('
+DROP TRIGGER IF EXISTS add_path_to_paths;
+CREATE TRIGGER add_path_to_paths
+    AFTER UPDATE ON cms_pages
+    WHEN old.path <> new.path
+    BEGIN
+        INSERT INTO cms_paths (
+            cms_page_id,
+            path,
+            created_at,
+            updated_at
+        )
+            VALUES
+        (
+            new.id,
+            old.path,
+            CURRENT_TIMESTAMP,
+            CURRENT_TIMESTAMP
+        ) ON CONFLICT (path) DO NOTHING;
+    END;
+        ');
     }
 
     /**
@@ -172,7 +172,7 @@ return new class extends Migration {
      */
     public function down()
     {
-        // \DB::unprepared("DROP TRIGGER IF EXISTS `add_path_to_paths`");
+        \DB::unprepared("DROP TRIGGER IF EXISTS add_path_to_paths");
 
         Schema::dropIfExists("cms_component_page"); // put this above components b/d sql error
         Schema::dropIfExists("cms_templates");
