@@ -66,17 +66,20 @@ class LaravelCmsServiceProvider extends ServiceProvider
         );
 
         /**
-         * Define a composer for the render view
-         */
-        View::composer("render", RenderComposer::class);
-
-        /**
          * Publish Admin
          */
         $this->publishes(
             [
                 __DIR__ . "/../../public/build/" => public_path(
                     "vendor/laravel-cms"
+                ),
+            ],
+            "vue"
+        );
+        $this->publishes(
+            [
+                __DIR__ . "/../../resources/admin/" => resource_path(
+                    "vendor/laravel-cms/admin"
                 ),
             ],
             "vue"
