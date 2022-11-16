@@ -1,8 +1,7 @@
 import { createApp } from "vue";
 
-import App from "./components/admin/index.vue";
-
-import router from "./routes.js";
+import App from "./js/index.vue";
+import router from "./js/routes.js";
 import notifications from "@kyvg/vue3-notification";
 
 const app = createApp(App).use(router).use(notifications);

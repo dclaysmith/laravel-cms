@@ -12,6 +12,6 @@
 </head>
 <body>
     <div id="admin-dev"></div>
-	@vite('packages/LaravelCms/resources/admin/js/admin.js')
+	@vite('packages/LaravelCms/resources/admin/src/js/admin.js')
 </body>
 </html>

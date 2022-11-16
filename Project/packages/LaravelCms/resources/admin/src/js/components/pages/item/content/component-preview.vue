@@ -21,7 +21,7 @@
 
 <script>
 import { ref, computed } from "vue";
-import clip from "text-clipper";
+// import { clip } from "text-clipper";
 
 export default {
     name: "LaravelCmsAdminPageComponent",
@@ -41,7 +41,8 @@ export default {
          * Computed
          */
         const preview = computed(() => {
-            return clip(props.component.html, 140, { html: true, maxLines: 5 });
+            return props.component.html;
+            // return clip(props.component.html, 140, { html: true, maxLines: 5 });
         });
 
         return { onEditClick, onDeleteClick, preview };

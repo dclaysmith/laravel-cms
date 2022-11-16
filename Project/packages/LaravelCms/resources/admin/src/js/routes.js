@@ -1,13 +1,13 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 
-import Index from "./components/admin/index.vue";
-import Components from "./components/admin/components/index.vue";
-import Media from "./components/admin/media/index.vue";
-import Pages from "./components/admin/pages/index.vue";
-import Page from "./components/admin/pages/item/index.vue";
-import Paths from "./components/admin/paths/index.vue";
-import Templates from "./components/admin/templates/index.vue";
-import Template from "./components/admin/templates/item/index.vue";
+import Index from "./index.vue";
+import Components from "./components/components/index.vue";
+import Media from "./components/media/index.vue";
+import Pages from "./components/pages/index.vue";
+import Page from "./components/pages/item/index.vue";
+import Paths from "./components/paths/index.vue";
+import Templates from "./components/templates/index.vue";
+import Template from "./components/templates/item/index.vue";
 
 const routes = [
     {

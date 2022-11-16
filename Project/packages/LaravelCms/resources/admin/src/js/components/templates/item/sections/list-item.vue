@@ -31,7 +31,7 @@
 
 <script>
 import { watch } from "vue";
-import { useDebounceFn } from "../../../../../composables/useDebounce.js";
+import { useDebounceFn } from "../../../../composables/useDebounce.js";
 
 export default {
     name: "LaravelCmsAdminTemplatesListItem",

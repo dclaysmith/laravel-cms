@@ -78,7 +78,7 @@ class LaravelCmsServiceProvider extends ServiceProvider
         );
         $this->publishes(
             [
-                __DIR__ . "/../../resources/admin/" => resource_path(
+                __DIR__ . "/../../resources/admin/dist" => resource_path(
                     "vendor/laravel-cms/admin"
                 ),
             ],

@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import AdminMenu from "./menu/index.vue";
+import AdminMenu from "./components/menu/index.vue";
 
 export default {
-    name: "LaravelCmsAdmin",
+    name: "LaravelCmsAdminVueComponent",
     components: {
         AdminMenu: AdminMenu,
     },
