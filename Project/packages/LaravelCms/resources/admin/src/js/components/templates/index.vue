@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, inject } from "vue";
 import { notify } from "@kyvg/vue3-notification";
 import { useRouter } from "vue-router";
 import { sortBy as _sortBy } from "lodash";
@@ -31,6 +31,7 @@ export default {
     },
     setup(props, { emit }) {
         const router = useRouter();
+        const $cookies = inject("$cookies");
 
         /**
          * Reactive Properties
@@ -53,6 +54,7 @@ export default {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
+                    "X-XSRF-TOKEN": $cookies.get("XSRF-TOKEN"),
                 },
                 method: "POST",
                 body: JSON.stringify(template),
