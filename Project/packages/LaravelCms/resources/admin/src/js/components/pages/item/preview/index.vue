@@ -10,11 +10,14 @@ export default {
     setup(props, { emit }) {
         const page = ref(null);
 
+        console.log("...get page data");
+
         async function fetchPreview() {
             const response = await fetch("/api/cms-render/" + props.page.id, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
+                    "X-XSRF-TOKEN": $cookies.get("XSRF-TOKEN"),
                 },
                 method: "POST",
             });

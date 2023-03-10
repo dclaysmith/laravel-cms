@@ -87,7 +87,7 @@ class PageController extends Controller
             "template.templateSections",
         ])->findOrFail($id);
 
-        return new PageResource($page, 201);
+        return new PageResource($page, 200);
     }
 
     /**

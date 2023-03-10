@@ -57,6 +57,7 @@ export default {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
+                    "X-XSRF-TOKEN": $cookies.get("XSRF-TOKEN"),
                 },
                 method: "POST",
                 body: JSON.stringify(path),
@@ -85,6 +86,7 @@ export default {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
+                    "X-XSRF-TOKEN": $cookies.get("XSRF-TOKEN"),
                 },
                 method: "DELETE",
             });

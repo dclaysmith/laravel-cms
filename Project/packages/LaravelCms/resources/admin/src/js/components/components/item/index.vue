@@ -65,6 +65,7 @@ export default {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
+                    "X-XSRF-TOKEN": $cookies.get("XSRF-TOKEN"),
                 },
                 method: "PUT",
                 body: JSON.stringify(component.value),

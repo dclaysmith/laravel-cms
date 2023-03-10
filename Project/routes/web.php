@@ -13,11 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin', function () {
-    return view('vendor.laravel-cms.admin');
-});
+// Route::get('/admin', function () {
+//     return view('vendor.laravel-cms.admin');
+// });
 
-
-Route::get('/admin-dev', function () {
-    return view('admin-dev');
+Route::get("/admin-dev", function () {
+    return view("admin-dev");
 });

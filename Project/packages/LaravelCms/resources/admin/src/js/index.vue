@@ -19,19 +19,19 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .cms-container {
     display: flex;
 }
 .cms-menu {
-    flex: 1;
+    flex: 2;
     padding: 2em;
 }
 .cms-menu ul {
     margin: 0px;
 }
 .cms-content {
-    flex: 10;
+    flex: 8;
     padding: 2em;
 }
 
