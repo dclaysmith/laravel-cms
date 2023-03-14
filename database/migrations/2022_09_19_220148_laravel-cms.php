@@ -23,6 +23,21 @@ return new class extends Migration {
             $table->timestamps();
         });
 
+
+        /**
+         * Cms Template
+         * - A reusable page structure
+         */
+        Schema::create("cms_templates", function (Blueprint $table) {
+            $table->id();
+            $table->string("name");
+            $table->string("identifier");
+            $table->string("description")->nullable(true);
+            $table->timestamps();
+
+            $table->unique(["identifier"]);
+        });
+
         /**
          * Cms Page
          * - On save, add the current /path to the cms_pathes table.
@@ -46,6 +61,40 @@ return new class extends Migration {
             $table->index("cms_template_id");
         });
 
+       /**
+         * Cms Template Sections
+         * - A section of a template that contains components
+         */
+        Schema::create("cms_template_sections", function (Blueprint $table) {
+            $table->id();
+            $table
+                ->foreignId("cms_template_id")
+                ->constrained()
+                ->onDelete("CASCADE");
+            $table->string("name");
+            $table->string("identifier");
+            $table->string("description")->nullable(true);
+            $table->timestamps();
+
+            $table->index("cms_template_id");
+
+            $table->unique(["cms_template_id", "identifier"]);
+        });
+
+
+        /**
+         * Cms Object
+         * - Menus, etc.
+         */
+        Schema::create("cms_components", function (Blueprint $table) {
+            $table->id();
+            $table->boolean("is_global")->default(false);
+            $table->string("name");
+            $table->string("html")->nullable(true);
+            $table->string("view")->nullable(true);
+            $table->timestamps();
+        });
+        
         /**
          * Cms Page Object
          */
@@ -77,18 +126,6 @@ return new class extends Migration {
             ]);
         });
 
-        /**
-         * Cms Object
-         * - Menus, etc.
-         */
-        Schema::create("cms_components", function (Blueprint $table) {
-            $table->id();
-            $table->boolean("is_global")->default(false);
-            $table->string("name");
-            $table->string("html")->nullable(true);
-            $table->string("view")->nullable(true);
-            $table->timestamps();
-        });
 
         /**
          * Cms Paths
@@ -108,39 +145,7 @@ return new class extends Migration {
             $table->unique(["path"]);
         });
 
-        /**
-         * Cms Template Sections
-         * - A section of a template that contains components
-         */
-        Schema::create("cms_template_sections", function (Blueprint $table) {
-            $table->id();
-            $table
-                ->foreignId("cms_template_id")
-                ->constrained()
-                ->onDelete("CASCADE");
-            $table->string("name");
-            $table->string("identifier");
-            $table->string("description")->nullable(true);
-            $table->timestamps();
-
-            $table->index("cms_template_id");
-
-            $table->unique(["cms_template_id", "identifier"]);
-        });
-
-        /**
-         * Cms Template
-         * - A reusable page structure
-         */
-        Schema::create("cms_templates", function (Blueprint $table) {
-            $table->id();
-            $table->string("name");
-            $table->string("identifier");
-            $table->string("description")->nullable(true);
-            $table->timestamps();
-
-            $table->unique(["identifier"]);
-        });
+ 
 
         \DB::unprepared('
 DROP TRIGGER IF EXISTS add_path_to_paths;
