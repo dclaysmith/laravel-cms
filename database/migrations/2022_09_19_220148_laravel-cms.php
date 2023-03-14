@@ -94,7 +94,7 @@ return new class extends Migration {
             $table->string("view")->nullable(true);
             $table->timestamps();
         });
-        
+
         /**
          * Cms Page Object
          */
@@ -145,10 +145,7 @@ return new class extends Migration {
             $table->unique(["path"]);
         });
 
- 
-
         \DB::unprepared('
-DROP TRIGGER IF EXISTS add_path_to_paths;
 CREATE TRIGGER add_path_to_paths
     AFTER UPDATE ON cms_pages
     WHEN old.path <> new.path
@@ -166,8 +163,7 @@ CREATE TRIGGER add_path_to_paths
             CURRENT_TIMESTAMP,
             CURRENT_TIMESTAMP
         ) ON CONFLICT (path) DO NOTHING;
-    END;
-        ');
+    END;');
     }
 
     /**
@@ -177,7 +173,7 @@ CREATE TRIGGER add_path_to_paths
      */
     public function down()
     {
-        \DB::unprepared("DROP TRIGGER IF EXISTS add_path_to_paths");
+        \DB::unprepared("DROP TRIGGER IF EXISTS add_path_to_paths;");
 
         Schema::dropIfExists("cms_component_page"); // put this above components b/d sql error
         Schema::dropIfExists("cms_templates");
