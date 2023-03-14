@@ -148,7 +148,6 @@ return new class extends Migration {
         \DB::unprepared('
 CREATE TRIGGER add_path_to_paths
     AFTER UPDATE ON cms_pages
-    WHEN old.path <> new.path
     BEGIN
         INSERT INTO cms_paths (
             cms_page_id,
