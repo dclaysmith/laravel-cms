@@ -148,6 +148,7 @@ return new class extends Migration {
         \DB::unprepared('
 CREATE TRIGGER add_path_to_paths
     AFTER UPDATE ON cms_pages
+    FOR EACH ROW
     BEGIN
         INSERT INTO cms_paths (
             cms_page_id,
@@ -157,8 +158,8 @@ CREATE TRIGGER add_path_to_paths
         )
             VALUES
         (
-            new.id,
-            old.path,
+            NEW.id,
+            OLD.path,
             CURRENT_TIMESTAMP,
             CURRENT_TIMESTAMP
         ) ON CONFLICT (path) DO NOTHING;
