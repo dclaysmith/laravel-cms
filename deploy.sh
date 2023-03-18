@@ -9,6 +9,5 @@ echo "$PWD"
 echo "Update Project"
 # composer update; 
 rm -rf resources/vendor/laravel-cms; php artisan vendor:publish --provider="Dclaysmith\LaravelCms\Providers\LaravelCmsServiceProvider"
-echo "cd ../Package"
-cd ./packages/LaravelCms/
+cd ../LaravelCms
 echo "$PWD"

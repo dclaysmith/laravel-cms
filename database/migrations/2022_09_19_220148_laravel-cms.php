@@ -144,26 +144,6 @@ return new class extends Migration {
 
             $table->unique(["path"]);
         });
-
-        \DB::unprepared('
-CREATE TRIGGER add_path_to_paths
-    AFTER UPDATE ON cms_pages
-    FOR EACH ROW
-    BEGIN
-        INSERT INTO cms_paths (
-            cms_page_id,
-            path,
-            created_at,
-            updated_at
-        )
-            VALUES
-        (
-            NEW.id,
-            OLD.path,
-            CURRENT_TIMESTAMP,
-            CURRENT_TIMESTAMP
-        ) ON CONFLICT (path) DO NOTHING;
-    END;');
     }
 
     /**
@@ -173,8 +153,6 @@ CREATE TRIGGER add_path_to_paths
      */
     public function down()
     {
-        \DB::unprepared("DROP TRIGGER IF EXISTS add_path_to_paths;");
-
         Schema::dropIfExists("cms_component_page"); // put this above components b/d sql error
         Schema::dropIfExists("cms_templates");
         Schema::dropIfExists("cms_template_sections");

@@ -11,6 +11,22 @@ class Page extends Model
     use HasFactory;
 
     /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::saved(function (Page $page) {
+            $dirty = $page->getDirty();
+            if (array_key_exists("path",$dirty)) {
+                \Dclaysmith\LaravelCms\Models\Path::firstOrCreate([
+                    "cms_page_id" => $page->id, 
+                    "path" => $page->path
+                ]);
+            }
+        });
+    }
+
+    /**
      * The table associated with the model.
      *
      * @var string
