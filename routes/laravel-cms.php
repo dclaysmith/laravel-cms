@@ -29,6 +29,6 @@ Route::middleware("web")->group(function () {
             TemplateSectionController::class
         );
         Route::resource("cms-views", ViewController::class);
-        Route::post("cms-render/{id}", [RenderController::class, "store"]);
+        Route::post("cms-render", [RenderController::class, "store"]);
     });
 });
