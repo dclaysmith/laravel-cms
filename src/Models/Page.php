@@ -84,8 +84,14 @@ class Page extends Model
 
     public static function findByPath($path)
     {
-        \Dclaysmith\LaravelCms\Models\Page::join('cms_paths', 'cms_page_id', '=', 'cms_pages.id')
-            ->where('cms_paths.path', '=', $path)
-            ->select('cms_pages.*');
+        return \Dclaysmith\LaravelCms\Models\Page::join(
+            "cms_paths",
+            "cms_page_id",
+            "=",
+            "cms_pages.id"
+        )
+            ->where("cms_paths.path", "=", $path)
+            ->select("cms_pages.*")
+            ->first();
     }
 }
