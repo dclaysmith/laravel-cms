@@ -81,4 +81,11 @@ class Page extends Model
             ->orderByPivot("sort_order")
             ->withPivot("cms_template_section_id");
     }
+
+    public static function findByPath($path)
+    {
+        \Dclaysmith\LaravelCms\Models\Page::join('cms_paths', 'cms_page_id', '=', 'cms_pages.id')
+            ->where('cms_paths.path', '=', $path)
+            ->select('cms_pages.*');
+    }
 }

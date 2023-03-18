@@ -32,14 +32,14 @@ class RenderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRequest $request, $cmsPageId)
+    public function store(StoreRequest $request)
     {
         // $view1 = new \App\View\Vendor\LaravelCms\Client\ExampleOne($request);
         // $view2 = new \App\View\Vendor\LaravelCms\Client\ExampleTwo($request);
 
         // dd($view2->render());
 
-        $page = Page::findOrFail($cmsPageId);
+        $page = Page::findByPath($request->input('path'));
 
         $components = $page->components;
 
