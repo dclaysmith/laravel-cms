@@ -34,12 +34,9 @@ class RenderController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        // $view1 = new \App\View\Vendor\LaravelCms\Client\ExampleOne($request);
-        // $view2 = new \App\View\Vendor\LaravelCms\Client\ExampleTwo($request);
-
-        // dd($view2->render());
-
-        $page = Page::findByPath($request->input('path'));
+        if (!$page = Page::findByPath($request->input('path'))) {
+            return new JsonResource(null, 404);
+        }
 
         $components = $page->components;
 
