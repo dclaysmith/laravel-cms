@@ -4,7 +4,7 @@ cd ./resources/admin
 echo "$PWD"
 rm -rf dist; npm run build
 echo "cd ../../"
-cd ../../../LaravelCmsDev/
+cd ../../../LaravelPackageDev/
 echo "$PWD"
 echo "Update Project"
 # composer update; 
