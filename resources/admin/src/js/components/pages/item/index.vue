@@ -38,11 +38,7 @@
                 </div>
             </div>
         </div>
-        <page-paths
-            v-if="'paths' == tab"
-            :page="page"
-            :templates="templates"
-        ></page-paths>
+        <page-paths v-if="'paths' == tab" :page="page"></page-paths>
         <page-content v-if="'content' == tab" :page="page"> </page-content>
         <page-preview v-if="'preview' == tab" :page="page"> </page-preview>
     </template>
