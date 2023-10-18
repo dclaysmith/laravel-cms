@@ -72,7 +72,7 @@ class ComponentController extends Controller
     {
         $data = $request->validated();
 
-        $component = Component::firstOrCreate($data);
+        $component = Component::create($data);
 
         /**
          * if a page is provided
