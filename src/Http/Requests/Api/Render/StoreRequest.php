@@ -9,7 +9,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "path" => ["required"],
+            "cms_page_id" => ["integer", "required_without:path"],
+            "path" => ["required_without:cms_page_id"],
         ];
     }
 }
