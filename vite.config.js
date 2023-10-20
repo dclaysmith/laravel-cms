@@ -1,8 +1,10 @@
-// vite.config.js
 import { defineConfig } from "vite";
 import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
 
+/**
+ * We need this to do development in LaravelPackageDev
+ */
 export default defineConfig({
     plugins: [vue(), laravel(["resources/admin/src/admin.js"])],
     build: {

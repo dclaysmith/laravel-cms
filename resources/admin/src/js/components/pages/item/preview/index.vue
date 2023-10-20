@@ -1,4 +1,6 @@
-<template>{{ page }}</template>
+<template>
+    <div>{{ page }}</div>
+</template>
 
 <script>
 import { ref } from "vue";
@@ -13,13 +15,14 @@ export default {
         console.log("...get page data");
 
         async function fetchPreview() {
-            const response = await fetch("/api/cms-render/" + props.page.id, {
+            const response = await fetch("/api/cms-render", {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                     "X-XSRF-TOKEN": $cookies.get("XSRF-TOKEN"),
                 },
                 method: "POST",
+                body: JSON.stringify({ cms_page_id: props.page.id }),
             });
             const json = await response.json();
             page.value = json.data;

@@ -4,6 +4,7 @@ namespace Dclaysmith\LaravelCms\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Arr;
 
 use Dclaysmith\LaravelCms\Models\Component;
 use Dclaysmith\LaravelCms\Models\ComponentPage;
@@ -77,22 +78,22 @@ class ComponentController extends Controller
         /**
          * if a page is provided
          */
-        if (\Arr::get($data, "cms_page_id")) {
+        if (Arr::get($data, "cms_page_id")) {
             $componentPage = ComponentPage::firstOrCreate(
                 [
                     "cms_component_id" => $component->id,
-                    "cms_page_id" => \Arr::get($data, "cms_page_id"),
+                    "cms_page_id" => Arr::get($data, "cms_page_id"),
                 ],
                 [
-                    "cms_template_section_id" => \Arr::get(
+                    "cms_template_section_id" => Arr::get(
                         $data,
                         "cms_template_section_id"
                     ),
                 ]
             );
             // $component->pages()->sync([
-            //     \Arr::get($data, "cms_page_id") => [
-            //         "cms_template_section_id" => \Arr::get(
+            //     Arr::get($data, "cms_page_id") => [
+            //         "cms_template_section_id" => Arr::get(
             //             $data,
             //             "cms_template_section_id"
             //         ),
@@ -144,14 +145,14 @@ class ComponentController extends Controller
 
         $component->save();
 
-        if (\Arr::get($data, "cms_page_id")) {
+        if (Arr::get($data, "cms_page_id")) {
             $componentPage = ComponentPage::updateOrCreate(
                 [
                     "cms_component_id" => $component->id,
-                    "cms_page_id" => \Arr::get($data, "cms_page_id"),
+                    "cms_page_id" => Arr::get($data, "cms_page_id"),
                 ],
                 [
-                    "cms_template_section_id" => \Arr::get(
+                    "cms_template_section_id" => Arr::get(
                         $data,
                         "cms_template_section_id"
                     ),

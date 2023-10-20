@@ -1,47 +1,52 @@
 <template>
-    <p><router-link to="/pages">&lt; Back</router-link></p>
-    <template v-if="page">
-        <h2>Edit Page: {{ page.name }}</h2>
-        <ul class="tab" style="margin-bottom: 1rem">
-            <li class="tab-item" :class="{ active: tab == 'main' || !tab }">
-                <a href="#" @click.prevent="tab = 'main'">Main</a>
-            </li>
-            <li class="tab-item" :class="{ active: tab == 'seo' }">
-                <a href="#" @click.prevent="tab = 'seo'">SEO</a>
-            </li>
-            <li class="tab-item" :class="{ active: tab == 'paths' }">
-                <a href="#" @click.prevent="tab = 'paths'">Paths</a>
-            </li>
-            <li class="tab-item" :class="{ active: tab == 'content' }">
-                <a href="#" @click.prevent="tab = 'content'">Content</a>
-            </li>
-            <li class="tab-item" :class="{ active: tab == 'preview' }">
-                <a href="#" @click.prevent="tab = 'preview'">Preview</a>
-            </li>
-        </ul>
-        <div class="container" v-if="'main' == tab || 'seo' == tab || !tab">
-            <div class="columns">
-                <div class="column col-6">
-                    <form @submit.prevent="onSubmit">
-                        <main-form
-                            v-show="'main' == tab || !tab"
-                            :page="page"
-                        ></main-form>
-                        <seo-form v-show="'seo' == tab" :page="page"></seo-form>
-                        <button
-                            class="btn btn-primary"
-                            :disabled="!saveEnabled"
-                        >
-                            Update
-                        </button>
-                    </form>
+    <div>
+        <p><router-link to="/pages">&lt; Back</router-link></p>
+        <div v-if="page">
+            <h2>Edit Page: {{ page.name }}</h2>
+            <ul class="tab" style="margin-bottom: 1rem">
+                <li class="tab-item" :class="{ active: tab == 'main' || !tab }">
+                    <a href="#" @click.prevent="tab = 'main'">Main</a>
+                </li>
+                <li class="tab-item" :class="{ active: tab == 'seo' }">
+                    <a href="#" @click.prevent="tab = 'seo'">SEO</a>
+                </li>
+                <li class="tab-item" :class="{ active: tab == 'paths' }">
+                    <a href="#" @click.prevent="tab = 'paths'">Paths</a>
+                </li>
+                <li class="tab-item" :class="{ active: tab == 'content' }">
+                    <a href="#" @click.prevent="tab = 'content'">Content</a>
+                </li>
+                <li class="tab-item" :class="{ active: tab == 'preview' }">
+                    <a href="#" @click.prevent="tab = 'preview'">Preview</a>
+                </li>
+            </ul>
+            <div class="container" v-if="'main' == tab || 'seo' == tab || !tab">
+                <div class="columns">
+                    <div class="column col-6">
+                        <form @submit.prevent="onSubmit">
+                            <main-form
+                                v-show="'main' == tab || !tab"
+                                :page="page"
+                            ></main-form>
+                            <seo-form
+                                v-show="'seo' == tab"
+                                :page="page"
+                            ></seo-form>
+                            <button
+                                class="btn btn-primary"
+                                :disabled="!saveEnabled"
+                            >
+                                Update
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <page-paths v-if="'paths' == tab" :page="page"></page-paths>
+            <page-content v-if="'content' == tab" :page="page"> </page-content>
+            <page-preview v-if="'preview' == tab" :page="page"> </page-preview>
         </div>
-        <page-paths v-if="'paths' == tab" :page="page"></page-paths>
-        <page-content v-if="'content' == tab" :page="page"> </page-content>
-        <page-preview v-if="'preview' == tab" :page="page"> </page-preview>
-    </template>
+    </div>
 </template>
 
 <script>

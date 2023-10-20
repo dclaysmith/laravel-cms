@@ -34,7 +34,9 @@ class RenderController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        if (!$page = Page::findByPath($request->input('path'))) {
+        if ($cmsPageId = $request->input("cms_page_id")) {
+            $page = Page::find((int) $request->input("cms_page_id"));
+        } elseif (!($page = Page::findByPath($request->input("path")))) {
             return new JsonResource(null, 404);
         }
 

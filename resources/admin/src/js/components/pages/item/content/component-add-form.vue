@@ -3,7 +3,9 @@
         <fieldset>
             <legend>Add Item to Page</legend>
             <div class="form-group mx-2">
-                <label class="form-label" for="type">Select Component</label>
+                <label class="form-label" for="type"
+                    >Select Component {{ component.type }}</label
+                >
                 <select
                     class="form-select"
                     name="type"
@@ -37,7 +39,6 @@
                     v-model="component.name"
                 />
             </div>
-
             <template
                 v-if="
                     'new-text' == component.type || 'new-view' == component.type
@@ -128,7 +129,6 @@ export default {
             name: null,
         };
         const component = reactive({ ...componentInitialState });
-        const views = ref([]);
 
         const editor = useEditor({
             content: component.html,
@@ -137,6 +137,8 @@ export default {
                 component.html = editor.getHTML();
             },
         });
+
+        const views = ref([]);
 
         /**
          * Methods

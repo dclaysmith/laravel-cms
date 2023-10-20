@@ -25,8 +25,6 @@
                     >EDIT</component-edit-form
                 >
                 <component-add-form
-                    v-else
-                    v-if="page?.template?.template_sections"
                     :template-sections="page?.template?.template_sections"
                     :global-components="globalComponents"
                     @add="onAddComponent"

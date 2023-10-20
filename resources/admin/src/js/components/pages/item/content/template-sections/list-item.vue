@@ -3,26 +3,26 @@
         <legend>
             Section: {{ templateSection.name }} {{ templateSection.id }}
         </legend>
-        <component
+        <component-preview
             v-for="component in includedComponents"
             :key="component.id"
             :component="component"
             @edit="onEdit"
             @delete="onDelete"
-        ></component>
+        ></component-preview>
     </fieldset>
 </template>
 
 <script>
 import { ref, computed } from "vue";
-import Component from "../component-preview.vue";
+import ComponentPreview from "../component-preview.vue";
 import { sortBy as _sortBy, filter as _filter, chain as _chain } from "lodash";
 
 export default {
     name: "LaravelCmsAdminPageTemplateSection",
     props: ["templateSection", "components"],
     components: {
-        Component,
+        ComponentPreview,
     },
     setup(props, { emit }) {
         /**
