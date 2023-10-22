@@ -1,47 +1,59 @@
 <template>
-    <p><router-link to="/templates">&lt; Back</router-link></p>
-    <h2>Edit Template</h2>
-    <form @submit.prevent="onSubmit">
-        <fieldset v-if="template">
-            <div class="form-group form-inline mx-2">
-                <label class="form-label" for="name">Name</label>
-                <input
-                    class="form-input"
-                    type="text"
-                    name="name"
-                    id="name"
-                    v-model="template.name"
-                />
-            </div>
-            <div class="form-group form-inline mx-2">
-                <label class="form-label" for="identifier">Identifier</label>
-                <input
-                    class="form-input"
-                    type="text"
-                    name="identifier"
-                    id="identifier"
-                    v-model="template.identifier"
-                />
-            </div>
-            <div class="form-group form-inline mx-2">
-                <label class="form-label" for="description">Description</label>
-                <input
-                    class="form-input"
-                    type="text"
-                    name="description"
-                    id="description"
-                    v-model="template.description"
-                />
-            </div>
-            <button class="btn btn-link mx-2" :disabled="!saveEnabled">
-                Update
-            </button>
-        </fieldset>
-    </form>
-    <h2>Template Sections</h2>
-    <form>
-        <template-sections :template-id="id"></template-sections>
-    </form>
+    <div>
+        <p><router-link to="/templates">&lt; Back</router-link></p>
+        <h2>Edit Template</h2>
+        <form @submit.prevent="onSubmit" v-if="template">
+            <fieldset>
+                <div class="form-group form-inline mx-2">
+                    <label class="form-label" for="name">Name</label>
+                    <input
+                        class="form-input"
+                        type="text"
+                        name="name"
+                        id="name"
+                        v-model="template.name"
+                    />
+                </div>
+                <div class="form-group form-inline mx-2">
+                    <label class="form-label" for="identifier"
+                        >Identifier</label
+                    >
+                    <input
+                        class="form-input"
+                        type="text"
+                        name="identifier"
+                        id="identifier"
+                        v-model="template.identifier"
+                    />
+                </div>
+                <div class="form-group form-inline mx-2">
+                    <label class="form-label" for="description"
+                        >Description</label
+                    >
+                    <input
+                        class="form-input"
+                        type="text"
+                        name="description"
+                        id="description"
+                        v-model="template.description"
+                    />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group mx-2">
+                    <label class="form-label" for="html">Html</label>
+                    <textarea></textarea>
+                </div>
+                <button class="btn btn-link mx-2" :disabled="!saveEnabled">
+                    Update
+                </button>
+            </fieldset>
+        </form>
+        <h2>Template Sections</h2>
+        <form>
+            <template-sections :template-id="id"></template-sections>
+        </form>
+    </div>
 </template>
 
 <script>

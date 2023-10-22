@@ -23,7 +23,6 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-
         /**
          * Cms Template
          * - A reusable page structure
@@ -32,7 +31,8 @@ return new class extends Migration {
             $table->id();
             $table->string("name");
             $table->string("identifier");
-            $table->string("description")->nullable(true);
+            $table->text("description")->nullable(true);
+            $table->text("html")->nullable(true);
             $table->timestamps();
 
             $table->unique(["identifier"]);
@@ -61,7 +61,7 @@ return new class extends Migration {
             $table->index("cms_template_id");
         });
 
-       /**
+        /**
          * Cms Template Sections
          * - A section of a template that contains components
          */
@@ -81,7 +81,6 @@ return new class extends Migration {
             $table->unique(["cms_template_id", "identifier"]);
         });
 
-
         /**
          * Cms Object
          * - Menus, etc.
@@ -90,7 +89,7 @@ return new class extends Migration {
             $table->id();
             $table->boolean("is_global")->default(false);
             $table->string("name");
-            $table->string("html")->nullable(true);
+            $table->text("html")->nullable(true);
             $table->string("view")->nullable(true);
             $table->timestamps();
         });
@@ -125,7 +124,6 @@ return new class extends Migration {
                 "cms_template_section_id",
             ]);
         });
-
 
         /**
          * Cms Paths
