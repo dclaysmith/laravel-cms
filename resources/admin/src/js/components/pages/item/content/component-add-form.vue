@@ -48,7 +48,139 @@
                 <template v-if="'new-text' == component.type">
                     <div class="form-group mx-2">
                         <label class="form-label" for="html">Body</label>
-                        <editor-content :editor="editor" />
+                        <div v-if="editor">
+                            <bubble-menu
+                                class="bubble-menu"
+                                :tippy-options="{ duration: 100 }"
+                                :editor="editor"
+                            >
+                                <button
+                                    @click.prevent="
+                                        editor.chain().focus().toggleBold().run()
+                                    "
+                                    :class="{
+                                        'is-active': editor.isActive('bold'),
+                                    }"
+                                >
+                                    Bold
+                                </button>
+                                <button
+                                    @click.prevent="
+                                        editor.chain().focus().toggleItalic().run()
+                                    "
+                                    :class="{
+                                        'is-active': editor.isActive('italic'),
+                                    }"
+                                >
+                                    Italic
+                                </button>
+                                <button
+                                    @click.prevent="
+                                        editor.chain().focus().toggleStrike().run()
+                                    "
+                                    :class="{
+                                        'is-active': editor.isActive('strike'),
+                                    }"
+                                >
+                                    Strike
+                                </button>
+                                <button
+                                    @click.prevent="
+                                        editor
+                                            .chain()
+                                            .focus()
+                                            .toggleBulletList()
+                                            .run()
+                                    "
+                                    :class="{
+                                        'is-active': editor.isActive('bulletList'),
+                                    }"
+                                >
+                                    Bullet List
+                                </button>
+                                <button
+                                    @click.prevent="
+                                        editor
+                                            .chain()
+                                            .focus()
+                                            .toggleOrderedList()
+                                            .run()
+                                    "
+                                    :class="{
+                                        'is-active': editor.isActive('orderedList'),
+                                    }"
+                                >
+                                    Ordered List
+                                </button>
+                            </bubble-menu>
+                            <floating-menu
+                                class="floating-menu"
+                                :tippy-options="{ duration: 100 }"
+                                :editor="editor"
+                            >
+                                <button
+                                    @click.prevent="
+                                        editor
+                                            .chain()
+                                            .focus()
+                                            .toggleHeading({ level: 1 })
+                                            .run()
+                                    "
+                                    :class="{
+                                        'is-active': editor.isActive('heading', {
+                                            level: 1,
+                                        }),
+                                    }"
+                                >
+                                    H1
+                                </button>
+                                <button
+                                    @click.prevent="
+                                        editor
+                                            .chain()
+                                            .focus()
+                                            .toggleHeading({ level: 2 })
+                                            .run()
+                                    "
+                                    :class="{
+                                        'is-active': editor.isActive('heading', {
+                                            level: 2,
+                                        }),
+                                    }"
+                                >
+                                    H2
+                                </button>
+                                <button
+                                    @click.prevent="
+                                        editor
+                                            .chain()
+                                            .focus()
+                                            .toggleBulletList()
+                                            .run()
+                                    "
+                                    :class="{
+                                        'is-active': editor.isActive('bulletList'),
+                                    }"
+                                >
+                                    Bullet List
+                                </button>
+                                <button
+                                    @click.prevent="
+                                        editor
+                                            .chain()
+                                            .focus()
+                                            .toggleOrderedList()
+                                            .run()
+                                    "
+                                    :class="{
+                                        'is-active': editor.isActive('orderedList'),
+                                    }"
+                                >
+                                    Ordered List
+                                </button>
+                            </floating-menu>
+                            <editor-content :editor="editor" />
+                        </div>
                     </div>
                 </template>
 
@@ -111,13 +243,13 @@
 <script>
 import { ref, reactive, computed, watch } from "vue";
 import { sortBy as _sortBy } from "lodash";
-import { useEditor, EditorContent } from "@tiptap/vue-3";
+import { useEditor, EditorContent, BubbleMenu, FloatingMenu } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 
 export default {
     name: "LaravelCmsAdminPageAddComponentForm",
     props: ["templateSections", "globalComponents"],
-    components: { EditorContent, StarterKit },
+    components: { EditorContent, BubbleMenu, FloatingMenu },
     setup(props, { emit }) {
         /**
          * Reactive Properties

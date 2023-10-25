@@ -48,7 +48,7 @@ export default {
         }
 
         /**
-         * Updated
+         * Computed
          */
         const valid = computed(() => {
             return (

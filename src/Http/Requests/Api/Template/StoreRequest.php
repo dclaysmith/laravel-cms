@@ -16,6 +16,7 @@ class StoreRequest extends FormRequest
                 "unique:cms_templates,identifier",
             ],
             "description" => ["sometimes", "nullable"],
+            "html" => ["sometimes", "nullable"],
         ];
     }
 }

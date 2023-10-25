@@ -50,6 +50,7 @@ export default {
         }
 
         async function onAdd(component) {
+            debugger;
             const response = await fetch("/api/cms-components", {
                 headers: {
                     Accept: "application/json",

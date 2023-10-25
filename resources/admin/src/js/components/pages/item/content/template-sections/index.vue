@@ -6,8 +6,8 @@
                 :key="templateSection.id"
                 :template-section="templateSection"
                 :components="components"
-                @select="onSelect"
-                @delete="onDelete"
+                @select="$emit('select', $event)"
+                @delete="$emit('delete', $event)"
             ></list-item>
         </fieldset>
     </form>
@@ -27,14 +27,8 @@ export default {
         /**
          * Methods
          */
-        async function onSelect(component) {
-            emit("select", component);
-        }
-        function onDelete(component) {
-            emit("delete", component);
-        }
 
-        return { onSelect, onDelete };
+        return {};
     },
 };
 </script>

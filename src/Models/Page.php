@@ -17,10 +17,10 @@ class Page extends Model
     {
         static::saved(function (Page $page) {
             $dirty = $page->getDirty();
-            if (array_key_exists("path",$dirty)) {
+            if (array_key_exists("path", $dirty)) {
                 \Dclaysmith\LaravelCms\Models\Path::firstOrCreate([
-                    "cms_page_id" => $page->id, 
-                    "path" => $page->path
+                    "cms_page_id" => $page->id,
+                    "path" => $page->path,
                 ]);
             }
         });
@@ -78,6 +78,7 @@ class Page extends Model
             "cms_page_id",
             "cms_component_id"
         )
+            ->using(\Dclaysmith\LaravelCms\Models\ComponentPage::class)
             ->orderByPivot("sort_order")
             ->withPivot("cms_template_section_id");
     }

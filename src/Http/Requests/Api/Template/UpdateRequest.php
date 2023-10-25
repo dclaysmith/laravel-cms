@@ -17,6 +17,7 @@ class UpdateRequest extends FormRequest
                 "unique:cms_templates,identifier," . $this->id,
             ],
             "description" => ["sometimes", "nullable"],
+            "html" => ["sometimes", "nullable"],
         ];
     }
 }

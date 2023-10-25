@@ -2,11 +2,11 @@
 
 namespace Dclaysmith\LaravelCms\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ComponentPage extends Model
+class ComponentPage extends Pivot
 {
     use HasFactory;
 
@@ -58,6 +58,14 @@ class ComponentPage extends Model
         return $this->belongsTo(
             \Dclaysmith\LaravelCms\Models\Page::class,
             "cms_page_id"
+        );
+    }
+
+    public function templateSection()
+    {
+        return $this->belongsTo(
+            \Dclaysmith\LaravelCms\Models\TemplateSection::class,
+            "cms_template_section_id"
         );
     }
 }

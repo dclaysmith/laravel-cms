@@ -35,18 +35,17 @@ class RenderController extends Controller
     public function store(StoreRequest $request)
     {
         if ($cmsPageId = $request->input("cms_page_id")) {
-            $page = Page::find((int) $cmsPageId);
-        } elseif (!($page = Page::findByPath($request->input("path")))) {
+            $page = Page::with("components")->find((int) $cmsPageId);
+        } elseif (
+            !($page = Page::with("components")->findByPath(
+                $request->input("path")
+            ))
+        ) {
             return new JsonResource(null, 404);
         }
 
-        $components = $page->components;
-
-        $template = $page->template;
-
-        $response = new \stdClass();
-
         // Page attributes
+        $response = new \stdClass();
         $response->name = $page->name;
         $response->title = $page->title;
         $response->meta_keywords = $page->meta_keywords;
@@ -54,29 +53,37 @@ class RenderController extends Controller
         $response->path = $page->path;
         $response->allow_index = $page->allow_index;
 
-        // Assemble the sections, we'll add the rendered HTML below
-        $sections = [];
-        foreach ($template->templateSections as $templateSection) {
-            $section = new \stdClass();
-            $section->id = $templateSection->id;
-            $section->name = $templateSection->name;
-            $section->identifier = $templateSection->identifier;
-            $section->description = $templateSection->description;
-            $section->html = "";
-            $sections[] = (array) $section;
-        }
+        $template = new \DOMDocument();
+        $template->loadHTML(
+            $page->template ? $page->template->html : "<div></div>",
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
 
-        // Render the components
-        foreach ($components as $component) {
-            $index = array_search(
-                $component->pivot->cms_template_section_id,
-                array_column($sections, "id")
+        $xpath = new \DOMXpath($template);
+
+        foreach ($page->components as $component) {
+            $element = new \DOMDocument();
+            $element->loadHTML(
+                $component->render($request),
+                LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
             );
-            if (false !== $index) {
-                $sections[$index]["html"] .= $component->render($request);
+            $item = $element->getElementsByTagName("*")->item(0);
+            $node = $template->importNode($item, true);
+
+            $childNodes = $xpath->query(
+                sprintf(
+                    "//*[@data-template-section-identifier='%s']",
+                    $component->pivot->templateSection->identifier
+                )
+            );
+
+            if ($childNodes->length) {
+                $childNodes->item(0)->appendChild($node);
+            } else {
+                $template->appendChild($item);
             }
         }
-        $response->template_sections = $sections;
+        $response->html = $template->saveHTML();
 
         return new JsonResource((array) $response, 201);
     }

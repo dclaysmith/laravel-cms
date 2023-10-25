@@ -19,6 +19,7 @@ class TemplateResource extends JsonResource
             "name" => $this->name,
             "identifier" => $this->identifier,
             "description" => $this->description,
+            "html" => $this->html,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
             "template_sections" => TemplateSectionResource::collection(
