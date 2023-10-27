@@ -3,7 +3,7 @@
         <td>{{ component.id }}</td>
         <td>
             <router-link :to="'/components/' + component.id">{{
-                component.component
+                component.name
             }}</router-link>
         </td>
         <td>

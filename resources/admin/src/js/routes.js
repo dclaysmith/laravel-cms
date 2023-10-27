@@ -1,6 +1,7 @@
 import { createWebHashHistory, createRouter } from "vue-router";
 
 import Index from "./index.vue";
+import Component from "./components/components/item/index.vue";
 import Components from "./components/components/index.vue";
 import Media from "./components/media/index.vue";
 import Pages from "./components/pages/index.vue";
@@ -19,6 +20,12 @@ const routes = [
         path: "/components",
         name: "Components",
         component: Components,
+    },
+    {
+        path: "/components/:id",
+        name: "Component",
+        component: Component,
+        props: (route) => ({ id: parseInt(route.params.id) }),
     },
     {
         path: "/pages",

@@ -1,4 +1,6 @@
 <template>
+    <p><router-link to="/components">&lt; Back</router-link></p>
+    <h2>Edit Component</h2>
     <form @submit.prevent="onSubmit" v-if="component">
         <fieldset>
             <div class="form-group">
@@ -14,7 +16,7 @@
 
             <div class="form-group" v-if="component.html">
                 <label class="form-label" for="html">Body</label>
-                <editor-content :editor="editor" />
+                <wysiwyg-editor v-model="component.html"></wysiwyg-editor>
             </div>
 
             <button class="btn btn-primary" :disabled="!saveEnabled">
@@ -28,27 +30,18 @@
 import { ref, computed, watch } from "vue";
 import { notify } from "@kyvg/vue3-notification";
 import { sortBy as _sortBy, filter as _filter, chain as _chain } from "lodash";
-import { useEditor, EditorContent } from "@tiptap/vue-3";
-import StarterKit from "@tiptap/starter-kit";
+import WysiwygEditor from "../../editor/index.vue";
 
 export default {
     name: "LaravelCmsAdminComponent",
-    components: { EditorContent, StarterKit },
-    props: ["id", "templateSections"],
+    components: { WysiwygEditor },
+    props: ["id"],
     setup(props) {
         /**
          * Reactive Properties
          */
         const component = ref(null);
         const componentOriginal = ref(null);
-
-        const editor = useEditor({
-            content: component.html,
-            extensions: [StarterKit],
-            onUpdate: ({ editor }) => {
-                component.html = editor.getHTML();
-            },
-        });
 
         /**
          * Methods
@@ -104,13 +97,12 @@ export default {
 
         return {
             component,
+            componentOriginal,
             saveEnabled,
             onSubmit,
-            editor,
         };
     },
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -8,7 +8,7 @@
                     type="text"
                     name="name"
                     id="name"
-                    v-model="newPath.name"
+                    v-model="newComponent.name"
                 />
             </div>
             <div class="form-group form-inline mx-2">
@@ -18,11 +18,11 @@
                     type="text"
                     name="identifier"
                     id="identifier"
-                    v-model="newPath.identifier"
+                    v-model="newComponent.identifier"
                 />
             </div>
             <button class="btn btn-primary mx-2" :disabled="!valid">
-                Add Path
+                Add Component
             </button>
         </fieldset>
     </form>
@@ -37,14 +37,14 @@ export default {
     components: {},
     emits: ["add"],
     setup(props, { emit }) {
-        const newPath = ref({});
+        const newComponent = ref({});
 
         async function onSubmit() {
             if (!this.valid) {
                 return;
             }
-            emit("add", newPath.value);
-            newPath.value = {};
+            emit("add", newComponent.value);
+            newComponent.value = {};
         }
 
         /**
@@ -52,11 +52,11 @@ export default {
          */
         const valid = computed(() => {
             return (
-                newPath.value.name != null && newPath.value.identifier != null
+                newComponent.value.name != null && newComponent.value.identifier != null
             );
         });
 
-        return { newPath, onSubmit, valid };
+        return { newComponent, onSubmit, valid };
     },
 };
 </script>

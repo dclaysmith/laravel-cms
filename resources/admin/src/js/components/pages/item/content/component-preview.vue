@@ -6,8 +6,12 @@
         </div>
         <div class="card-body" v-html="preview"></div>
         <div class="card-footer">
-            <button class="btn btn-link" @click.prevent="onEditClick">
-                Edit
+            <button
+                class="btn btn-link"
+                @click.prevent="onEditClick"
+                :disabled="component.is_global"
+            >
+                Edit {{ component.is_global ? "(Edit in Components)" : "" }}
             </button>
             <button
                 class="btn btn-link text-error float-right"
@@ -50,5 +54,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

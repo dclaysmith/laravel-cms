@@ -50,7 +50,7 @@ export default {
         }
 
         async function onAdd(component) {
-            debugger;
+            component.is_global = true;
             const response = await fetch("/api/cms-components", {
                 headers: {
                     Accept: "application/json",
@@ -58,7 +58,7 @@ export default {
                     "X-XSRF-TOKEN": $cookies.get("XSRF-TOKEN"),
                 },
                 method: "POST",
-                body: JSON.stringify(template),
+                body: JSON.stringify(component),
             });
 
             const json = await response.json();
@@ -78,7 +78,7 @@ export default {
                 type: "success",
             });
 
-            components.value.push(Object.assign(component, json.data));
+            router.push("/components/" + json.data.id);
         }
 
         async function onDelete(id) {
@@ -99,7 +99,7 @@ export default {
             }
 
             notify({
-                title: "Template deleted.",
+                title: "Component deleted.",
                 type: "warn",
             });
 
@@ -130,5 +130,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

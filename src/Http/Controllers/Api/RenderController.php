@@ -65,7 +65,7 @@ class RenderController extends Controller
             $element = new \DOMDocument();
             $element->loadHTML(
                 $component->render($request),
-                LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+                LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOERROR
             );
             $item = $element->getElementsByTagName("*")->item(0);
             $node = $template->importNode($item, true);
