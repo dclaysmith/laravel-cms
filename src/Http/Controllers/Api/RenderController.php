@@ -72,7 +72,7 @@ class RenderController extends Controller
 
             $childNodes = $xpath->query(
                 sprintf(
-                    "//*[@data-template-section-identifier='%s']",
+                    "//*[@data-template-section='%s']",
                     $component->pivot->templateSection->identifier
                 )
             );

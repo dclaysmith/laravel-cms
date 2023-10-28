@@ -47,7 +47,7 @@ export default {
         async function onAdd(item) {
             const formData = new FormData();
             formData.append("media", item.file);
-            formData.append("user", "asdf");
+            formData.append("caption", item.caption);
             const response = await fetch("/api/cms-media", {
                 headers: {
                     // Accept: "application/json",

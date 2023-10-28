@@ -14,7 +14,7 @@
                 />
             </div>
 
-            <div class="form-group" v-if="component.html">
+            <div class="form-group">
                 <label class="form-label" for="html">Body</label>
                 <wysiwyg-editor v-model="component.html"></wysiwyg-editor>
             </div>

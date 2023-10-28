@@ -71,6 +71,8 @@ class MediaController extends Controller
             ->file("media")
             ->store("", config("laravel_cms.filesystems_media_disk", "local"));
 
+        $data["filename"] = $path;
+
         $media = Media::create($data);
 
         return new MediaResource($media, 201);
