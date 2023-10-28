@@ -28,7 +28,6 @@
     </form>
 </template>
 
-
 <script>
 import { ref, computed } from "vue";
 
@@ -47,8 +46,8 @@ export default {
             newMedia.value = {};
         }
 
-        function onFileChanged() {
-            newMedia.value.file = "Set";
+        function onFileChanged(event) {
+            newMedia.value.file = event.target.files[0];
         }
 
         /**

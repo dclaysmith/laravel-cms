@@ -4,6 +4,7 @@ namespace Dclaysmith\LaravelCms\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 use Dclaysmith\LaravelCms\Models\Media;
 
@@ -66,7 +67,11 @@ class MediaController extends Controller
     {
         $data = $request->validated();
 
-        $media = Media::firstOrCreate($data);
+        $path = $request
+            ->file("media")
+            ->store("", config("laravel_cms.filesystems_media_disk", "local"));
+
+        $media = Media::create($data);
 
         return new MediaResource($media, 201);
     }

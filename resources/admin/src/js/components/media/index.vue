@@ -44,15 +44,18 @@ export default {
             loaded.value = true;
         }
 
-        async function onAdd(path) {
+        async function onAdd(item) {
+            const formData = new FormData();
+            formData.append("media", item.file);
+            formData.append("user", "asdf");
             const response = await fetch("/api/cms-media", {
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
+                    // Accept: "application/json",
+                    // "Content-Type": "application/json",
                     "X-XSRF-TOKEN": $cookies.get("XSRF-TOKEN"),
                 },
                 method: "POST",
-                body: JSON.stringify(template),
+                body: formData,
             });
 
             const json = await response.json();
@@ -65,14 +68,12 @@ export default {
                 return;
             }
 
-            media.value.push(json.data);
-
             notify({
-                title: "New path added.",
+                title: "New media added.",
                 type: "success",
             });
 
-            paths.value.push(Object.assign(path, json.data));
+            media.value.push(Object.assign(item, json.data));
         }
 
         async function onDelete(id) {
@@ -122,5 +123,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
