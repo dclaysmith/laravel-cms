@@ -82,7 +82,7 @@ class RenderController extends Controller
             if ($childNodes->length) {
                 $childNodes->item(0)->appendChild($node);
             } else {
-                $template->appendChild($item);
+                $template->appendChild($node);
             }
         }
         $response->html = $template->saveHTML();
