@@ -55,7 +55,9 @@ class RenderController extends Controller
 
         $template = new \DOMDocument();
         $template->loadHTML(
-            $page->template ? $page->template->html : "<div></div>",
+            object_get($page, "template.html")
+                ? object_get($page, "template.html")
+                : "<div></div>",
             LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
         );
 
