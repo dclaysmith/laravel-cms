@@ -93,6 +93,7 @@ class Page extends Model
         )
             ->where("cms_paths.path", "=", $path)
             ->select("cms_pages.*")
+            ->with("components")
             ->first();
     }
 }

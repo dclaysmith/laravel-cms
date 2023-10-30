@@ -30,14 +30,13 @@ export default {
         /**
          * Computed
          */
-         const content = computed(() => {
+        const content = computed(() => {
             return page.value.html;
-         });
+        });
 
         return { content };
     },
 };
 </script>
 
-<style>
-</style>
+<style></style>
