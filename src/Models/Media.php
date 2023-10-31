@@ -46,6 +46,8 @@ class Media extends Model
      */
     public function getUrlAttribute()
     {
-        return Storage::url($this->filename);
+        return Storage::disk(
+            config("laravel_cms.filesystems_media_disk", "local")
+        )->url($this->filename);
     }
 }
