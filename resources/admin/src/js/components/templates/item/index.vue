@@ -42,7 +42,8 @@
                     type="text"
                     name="html"
                     id="html"
-                    v-model="template.html"></textarea>
+                    v-model="template.html"
+                ></textarea>
             </div>
             <button class="btn btn-link mx-2" :disabled="!saveEnabled">
                 Update
@@ -129,5 +130,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
