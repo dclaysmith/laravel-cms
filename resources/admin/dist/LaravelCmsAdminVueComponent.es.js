@@ -19494,8 +19494,8 @@ const aI = /* @__PURE__ */ _e(eI, [["render", sI]]), lI = {
         title: "Media deleted.",
         type: "warn"
       });
-      var p = paths.value.map((h) => h.id).indexOf(u);
-      ~p && paths.value.splice(p, 1);
+      var p = t.value.map((h) => h.id).indexOf(u);
+      ~p && t.value.splice(p, 1);
     }
     return i(), {
       mediaSorted: Te(() => Jt.exports.sortBy(t.value || [], (u) => u.created_at)),
