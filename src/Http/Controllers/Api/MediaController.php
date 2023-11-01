@@ -69,7 +69,7 @@ class MediaController extends Controller
 
         $path = $request
             ->file("media")
-            ->store("", config("laravel_cms.filesystems_media_disk", "local"));
+            ->store("", config("laravel-cms.filesystems_media_disk", "local"));
 
         $data["filename"] = $path;
 
