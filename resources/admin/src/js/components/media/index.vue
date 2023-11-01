@@ -85,6 +85,7 @@ export default {
                 },
                 method: "DELETE",
             });
+
             if (!response.ok) {
                 notify({
                     title: json.message,
