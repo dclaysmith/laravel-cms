@@ -98,8 +98,8 @@ export default {
                 type: "warn",
             });
 
-            var indexToRemove = paths.value.map((item) => item.id).indexOf(id);
-            ~indexToRemove && paths.value.splice(indexToRemove, 1);
+            var indexToRemove = media.value.map((item) => item.id).indexOf(id);
+            ~indexToRemove && media.value.splice(indexToRemove, 1);
         }
 
         fetchMediaList();
