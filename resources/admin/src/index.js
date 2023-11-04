@@ -9,6 +9,7 @@ import router from "./js/routes.js";
 import notifications from "@kyvg/vue3-notification";
 import VueCookies from "vue-cookies";
 import "./css/styles.scss";
+import "./css/admin.scss";
 
 const app = createApp(App).use(router).use(notifications).use(VueCookies);
 
