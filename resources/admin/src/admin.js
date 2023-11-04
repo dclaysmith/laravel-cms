@@ -7,6 +7,7 @@ import VueCookies from "vue-cookies";
 
 // Import full Spectre source code
 import "spectre.css";
+import "./css/admin.scss";
 
 const app = createApp(App).use(router).use(notifications).use(VueCookies);
 

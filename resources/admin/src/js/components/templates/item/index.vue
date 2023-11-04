@@ -36,15 +36,11 @@
         </fieldset>
         <fieldset>
             <div class="form-group mx-2">
-                <label class="form-label" for="html">Html</label>
-                <textarea
-                    class="form-input"
-                    type="text"
-                    name="html"
-                    id="html"
-                    v-model="template.html"
-                ></textarea>
+                <label class="form-label" for="html">Body</label>
+                <wysiwyg-editor v-model="template.html"></wysiwyg-editor>
             </div>
+        </fieldset>
+        <fieldset>
             <button class="btn btn-link mx-2" :disabled="!saveEnabled">
                 Update
             </button>
@@ -60,11 +56,12 @@
 import { ref, computed } from "vue";
 import { notify } from "@kyvg/vue3-notification";
 
+import WysiwygEditor from "../../editor/index.vue";
 import TemplateSections from "./sections/index.vue";
 
 export default {
     name: "LaravelCmsAdminTemplate",
-    components: { TemplateSections },
+    components: { TemplateSections, WysiwygEditor },
     props: ["id"],
     setup(props) {
         /**
