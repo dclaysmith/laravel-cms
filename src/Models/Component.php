@@ -48,7 +48,7 @@ class Component extends Model
         )->withPivot("cms_template_section_id");
     }
 
-    public function render($request)
+    public function render($page, $request)
     {
         if ($this->view) {
             $viewClass =
@@ -57,7 +57,26 @@ class Component extends Model
             $view = new $viewClass($request);
             return $view->render();
         } else {
-            return $this->html;
+            $html = $this->html;
+
+            /**
+             * Replace data-value="title" with page values
+             */
+            $element = new \DOMDocument();
+            $element->loadHTML(
+                $html,
+                LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOERROR
+            );
+            $xpath = new \DOMXpath($element);
+            $childNodes = $xpath->query("//*[@data-value]");
+            if (count($childNodes) > 0) {
+                foreach ($childNodes as $childNode) {
+                    $attribute = $childNode->getAttribute("data-value");
+                    $childNode->nodeValue = $page->{$attribute};
+                }
+            }
+
+            return $element->saveHTML();
         }
     }
 }

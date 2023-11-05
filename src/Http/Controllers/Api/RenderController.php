@@ -62,7 +62,7 @@ class RenderController extends Controller
         foreach ($page->components as $component) {
             $element = new \DOMDocument();
             $element->loadHTML(
-                $component->render($request),
+                $component->render($page, $request),
                 LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOERROR
             );
             $item = $element->getElementsByTagName("*")->item(0);
