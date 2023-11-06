@@ -26,6 +26,7 @@ class UpdateRequest extends FormRequest
                 "nullable",
                 "exists:cms_templates,id",
             ],
+            "cms_user_id" => ["sometimes", "nullable", "exists:cms_users,id"],
         ];
     }
 }

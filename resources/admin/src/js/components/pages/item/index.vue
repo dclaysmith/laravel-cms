@@ -27,6 +27,7 @@
                             <main-form
                                 v-show="'main' == tab || !tab"
                                 :page="page"
+                                :users="users"
                             ></main-form>
                             <seo-form
                                 v-show="'seo' == tab"
@@ -78,6 +79,7 @@ export default {
         const tab = ref(null);
         const pageOriginal = ref(null);
         const templates = ref([]);
+        const users = ref([]);
 
         /**
          * Methods
@@ -93,6 +95,12 @@ export default {
             const response = await fetch("/api/cms-templates");
             const json = await response.json();
             templates.value = json.data;
+        }
+
+        async function fetchUserList() {
+            const response = await fetch("/api/cms-users");
+            const json = await response.json();
+            users.value = json.data;
         }
 
         async function onSubmit() {
@@ -125,7 +133,7 @@ export default {
             });
         }
 
-        Promise.all([fetchPage(), fetchTemplateList()]);
+        Promise.all([fetchPage(), fetchTemplateList(), fetchUserList()]);
 
         /**
          * Computed
@@ -140,6 +148,7 @@ export default {
             tab,
             page,
             templates,
+            users,
             saveEnabled,
             onSubmit,
         };

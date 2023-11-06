@@ -1,8 +1,6 @@
 <template>
     <fieldset>
-        <legend>
-            Section: {{ templateSection.name }} {{ templateSection.id }}
-        </legend>
+        <legend>Section: {{ templateSection.name }}</legend>
         <component-preview
             v-for="component in includedComponents"
             :key="component.id"
@@ -54,5 +52,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

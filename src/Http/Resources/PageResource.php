@@ -17,10 +17,12 @@ class PageResource extends JsonResource
         return [
             "id" => (int) $this->id,
             "cms_template_id" => (int) $this->cms_template_id,
+            "template" => new TemplateResource($this->whenLoaded("template")),
+            "cms_user_id" => (int) $this->cms_user_id,
+            "user" => new UserResource($this->whenLoaded("user")),
             "components" => ComponentResource::collection(
                 $this->whenLoaded("components")
             ),
-            "template" => new TemplateResource($this->whenLoaded("template")),
             "name" => $this->name,
             "title" => $this->title,
             "meta_keywords" => $this->meta_keywords,

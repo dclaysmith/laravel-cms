@@ -22,6 +22,7 @@ class StoreRequest extends FormRequest
             "path" => ["sometimes", "max:255"],
             "allow_index" => ["sometimes", "boolean"],
             "cms_template_id" => ["sometimes", "exists:cms_templates,id"],
+            "cms_user_id" => ["sometimes", "exists:cms_users,id"],
         ];
     }
 }

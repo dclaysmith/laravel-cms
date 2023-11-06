@@ -10,6 +10,7 @@ use Dclaysmith\LaravelCms\Http\Controllers\Api\PathController;
 use Dclaysmith\LaravelCms\Http\Controllers\Api\RenderController;
 use Dclaysmith\LaravelCms\Http\Controllers\Api\TemplateController;
 use Dclaysmith\LaravelCms\Http\Controllers\Api\TemplateSectionController;
+use Dclaysmith\LaravelCms\Http\Controllers\Api\UserController;
 use Dclaysmith\LaravelCms\Http\Controllers\Api\ViewController;
 
 Route::middleware("web")->group(function () {
@@ -28,6 +29,7 @@ Route::middleware("web")->group(function () {
             "cms-template-sections",
             TemplateSectionController::class
         );
+        Route::resource("cms-users", UserController::class);
         Route::resource("cms-views", ViewController::class);
         Route::post("cms-render", [RenderController::class, "store"]);
     });

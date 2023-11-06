@@ -50,14 +50,22 @@ return new class extends Migration {
                 ->default(null)
                 ->constrained()
                 ->onDelete("SET NULL");
+            $table
+                ->foreignId("cms_user_id")
+                ->nullable(true)
+                ->default(null)
+                ->constrained()
+                ->onDelete("SET NULL");
             $table->string("name");
             $table->string("title");
             $table->string("meta_keywords")->nullable(true);
             $table->string("meta_description")->nullable(true);
             $table->string("path");
             $table->boolean("allow_index")->default(true);
+            $table->date("published_at")->nullable(true);
             $table->timestamps();
 
+            $table->index("cms_user_id");
             $table->index("cms_template_id");
         });
 
@@ -142,6 +150,16 @@ return new class extends Migration {
 
             $table->unique(["path"]);
         });
+
+        /**
+         * Cms Users
+         */
+        Schema::create("cms_users", function (Blueprint $table) {
+            $table->id();
+            $table->string("name");
+            $table->string("title");
+            $table->timestamps();
+        });
     }
 
     /**
@@ -151,6 +169,7 @@ return new class extends Migration {
      */
     public function down()
     {
+        Schema::dropIfExists("cms_users");
         Schema::dropIfExists("cms_component_page"); // put this above components b/d sql error
         Schema::dropIfExists("cms_templates");
         Schema::dropIfExists("cms_template_sections");

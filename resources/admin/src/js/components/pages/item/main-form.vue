@@ -20,6 +20,19 @@
                 v-model="page.path"
             />
         </div>
+        <div class="form-group" v-if="users?.length">
+            <label class="form-label" for="cms_user_id">User</label>
+            <select
+                class="form-select"
+                name="cms_user_id"
+                id="cms_user_id"
+                v-model.number="page.cms_user_id"
+            >
+                <option v-for="user in users" :key="user.id" :value="user.id">
+                    {{ user.name }}
+                </option>
+            </select>
+        </div>
         <div class="form-group" v-if="templates?.length">
             <label class="form-label" for="template">Template</label>
             <select
@@ -45,7 +58,7 @@ import { ref } from "vue";
 
 export default {
     name: "LaravelCmsAdminPageMainForm",
-    props: ["page", "templates"],
+    props: ["page", "templates", "users"],
     components: {},
     setup(props, { emit }) {
         return {};
@@ -53,5 +66,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

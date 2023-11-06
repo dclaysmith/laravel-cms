@@ -1,16 +1,16 @@
 <template>
-    <h2>Add Template</h2>
+    <h2>Add User</h2>
     <add-form @add="onAdd"></add-form>
-    <h2>Existing Templates</h2>
-    <table class="table" v-if="loaded && templatesSorted.length">
+    <h2>Existing Users</h2>
+    <table class="table" v-if="loaded && usersSorted.length">
         <list-item
-            v-for="template in templatesSorted"
-            :key="template.id"
-            :template="template"
+            v-for="user in usersSorted"
+            :key="user.id"
+            :user="user"
             @delete="onDelete"
         ></list-item>
     </table>
-    <p v-else-if="loaded">There are no templates.</p>
+    <p v-else-if="loaded">There are no users.</p>
     <p v-else>Loading...</p>
 </template>
 
@@ -24,7 +24,7 @@ import ListItem from "./list-item.vue";
 import AddForm from "./add-form.vue";
 
 export default {
-    name: "LaravelCmsAdminTemplates",
+    name: "LaravelCmsAdminUsers",
     components: {
         ListItem,
         AddForm,
@@ -36,28 +36,28 @@ export default {
         /**
          * Reactive Properties
          */
-        const templates = ref([]);
+        const users = ref([]);
         const loaded = ref(false);
 
         /**
          * Methods
          */
-        async function fetchTemplateList() {
-            const response = await fetch("/api/cms-templates");
+        async function fetchUserList() {
+            const response = await fetch("/api/cms-users");
             const json = await response.json();
-            templates.value = json.data;
+            users.value = json.data;
             loaded.value = true;
         }
 
-        async function onAdd(template) {
-            const response = await fetch("/api/cms-templates", {
+        async function onAdd(user) {
+            const response = await fetch("/api/cms-users", {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                     "X-XSRF-TOKEN": $cookies.get("XSRF-TOKEN"),
                 },
                 method: "POST",
-                body: JSON.stringify(template),
+                body: JSON.stringify(user),
             });
 
             const json = await response.json();
@@ -70,18 +70,18 @@ export default {
                 return;
             }
 
-            templates.value.push(json.data);
+            users.value.push(json.data);
 
             notify({
-                title: "New template created.",
+                title: "New user created.",
                 type: "success",
             });
 
-            router.push("/templates/" + json.data.id);
+            router.push("/users/" + json.data.id);
         }
 
         async function onDelete(id) {
-            const response = await fetch("/api/cms-templates/" + id, {
+            const response = await fetch("/api/cms-users/" + id, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
@@ -98,29 +98,27 @@ export default {
             }
 
             notify({
-                title: "Template deleted.",
+                title: "User deleted.",
                 type: "warn",
             });
 
-            var indexToRemove = templates.value
-                .map((item) => item.id)
-                .indexOf(id);
-            ~indexToRemove && templates.value.splice(indexToRemove, 1);
+            var indexToRemove = users.value.map((item) => item.id).indexOf(id);
+            ~indexToRemove && users.value.splice(indexToRemove, 1);
         }
 
-        fetchTemplateList();
+        fetchUserList();
 
         /**
          * Updated
          */
-        const templatesSorted = computed(() => {
-            return _sortBy(templates.value || [], (template) => {
-                return template.name;
+        const usersSorted = computed(() => {
+            return _sortBy(users.value || [], (user) => {
+                return user.name;
             });
         });
 
         return {
-            templatesSorted,
+            usersSorted,
             loaded,
             onAdd,
             onDelete,

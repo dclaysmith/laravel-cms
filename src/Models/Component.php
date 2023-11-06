@@ -72,7 +72,7 @@ class Component extends Model
             if (count($childNodes) > 0) {
                 foreach ($childNodes as $childNode) {
                     $attribute = $childNode->getAttribute("data-value");
-                    $childNode->nodeValue = $page->{$attribute};
+                    $childNode->nodeValue = data_get($page, $attribute);
                 }
             }
 

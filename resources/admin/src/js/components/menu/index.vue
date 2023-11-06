@@ -5,6 +5,7 @@
         <li><router-link to="/paths">Paths</router-link></li>
         <li><router-link to="/components">Components</router-link></li>
         <li><router-link to="/media">Media</router-link></li>
+        <li><router-link to="/users">Users</router-link></li>
     </ul>
 </template>
 
@@ -14,5 +15,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

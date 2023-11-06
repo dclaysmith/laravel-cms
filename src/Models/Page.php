@@ -46,6 +46,7 @@ class Page extends Model
         "path",
         "allow_index",
         "cms_template_id",
+        "cms_user_id",
     ];
 
     /**
@@ -67,6 +68,14 @@ class Page extends Model
         return $this->belongsTo(
             \Dclaysmith\LaravelCms\Models\Template::class,
             "cms_template_id"
+        );
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(
+            \Dclaysmith\LaravelCms\Models\User::class,
+            "cms_user_id"
         );
     }
 
