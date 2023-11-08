@@ -23,6 +23,16 @@
                     v-model="user.title"
                 />
             </div>
+            <div class="form-group form-inline mx-2">
+                <label class="form-label" for="avatar">Avatar</label>
+                <input
+                    class="form-input"
+                    type="text"
+                    name="avatar"
+                    id="avatar"
+                    v-model="user.avatar"
+                />
+            </div>
         </fieldset>
         <fieldset>
             <button class="btn btn-link mx-2" :disabled="!saveEnabled">

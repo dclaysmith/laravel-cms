@@ -54,7 +54,7 @@ class Component extends Model
             $viewClass =
                 "\\App\\View\\Components\\Vendor\\LaravelCms\\UserDefined\\" .
                 str_replace(".php", "", $this->view);
-            $view = new $viewClass($request);
+            $view = new $viewClass($page, $request);
             return $view->render();
         } else {
             $html = $this->html;

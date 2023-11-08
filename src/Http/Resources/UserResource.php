@@ -18,6 +18,7 @@ class UserResource extends JsonResource
             "id" => (int) $this->id,
             "name" => $this->name,
             "title" => $this->title,
+            "avatar" => $this->avatar,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
         ];

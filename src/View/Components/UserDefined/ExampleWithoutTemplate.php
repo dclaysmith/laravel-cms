@@ -13,7 +13,7 @@ class ExampleWithoutTemplate extends Component
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct($page, $request)
     {
         $this->request = $request;
     }

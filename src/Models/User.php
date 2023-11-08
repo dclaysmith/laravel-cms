@@ -22,7 +22,7 @@ class User extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ["name", "title"];
+    protected $fillable = ["avatar", "name", "title"];
 
     /**
      * The attributes that should be hidden for serialization.

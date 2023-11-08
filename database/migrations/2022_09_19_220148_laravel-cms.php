@@ -157,7 +157,8 @@ return new class extends Migration {
         Schema::create("cms_users", function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->string("title");
+            $table->string("title")->nullable(true);
+            $table->string("avatar")->nullable(true);
             $table->timestamps();
         });
     }
