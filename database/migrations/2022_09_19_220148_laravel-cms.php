@@ -39,6 +39,37 @@ return new class extends Migration {
         });
 
         /**
+         * Cms Template Sections
+         * - A section of a template that contains components
+         */
+        Schema::create("cms_template_sections", function (Blueprint $table) {
+            $table->id();
+            $table
+                ->foreignId("cms_template_id")
+                ->constrained()
+                ->onDelete("CASCADE");
+            $table->string("name");
+            $table->string("identifier");
+            $table->string("description")->nullable(true);
+            $table->timestamps();
+
+            $table->index("cms_template_id");
+
+            $table->unique(["cms_template_id", "identifier"]);
+        });
+
+        /**
+         * Cms Users
+         */
+        Schema::create("cms_users", function (Blueprint $table) {
+            $table->id();
+            $table->string("name");
+            $table->string("title")->nullable(true);
+            $table->string("avatar")->nullable(true);
+            $table->timestamps();
+        });
+
+        /**
          * Cms Page
          * - On save, add the current /path to the cms_pathes table.
          */
@@ -67,26 +98,6 @@ return new class extends Migration {
 
             $table->index("cms_user_id");
             $table->index("cms_template_id");
-        });
-
-        /**
-         * Cms Template Sections
-         * - A section of a template that contains components
-         */
-        Schema::create("cms_template_sections", function (Blueprint $table) {
-            $table->id();
-            $table
-                ->foreignId("cms_template_id")
-                ->constrained()
-                ->onDelete("CASCADE");
-            $table->string("name");
-            $table->string("identifier");
-            $table->string("description")->nullable(true);
-            $table->timestamps();
-
-            $table->index("cms_template_id");
-
-            $table->unique(["cms_template_id", "identifier"]);
         });
 
         /**
@@ -150,17 +161,6 @@ return new class extends Migration {
 
             $table->unique(["path"]);
         });
-
-        /**
-         * Cms Users
-         */
-        Schema::create("cms_users", function (Blueprint $table) {
-            $table->id();
-            $table->string("name");
-            $table->string("title")->nullable(true);
-            $table->string("avatar")->nullable(true);
-            $table->timestamps();
-        });
     }
 
     /**
@@ -170,13 +170,13 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists("cms_users");
-        Schema::dropIfExists("cms_component_page"); // put this above components b/d sql error
-        Schema::dropIfExists("cms_templates");
-        Schema::dropIfExists("cms_template_sections");
         Schema::dropIfExists("cms_paths");
+        Schema::dropIfExists("cms_component_page"); // put this above components b/d sql error
         Schema::dropIfExists("cms_components");
         Schema::dropIfExists("cms_pages");
+        Schema::dropIfExists("cms_users");
+        Schema::dropIfExists("cms_template_sections");
+        Schema::dropIfExists("cms_templates");
         Schema::dropIfExists("cms_media");
     }
 };
