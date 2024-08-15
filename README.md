@@ -1,5 +1,7 @@
 # LaravelCms
 
+This package is intended for developers and is a work in progress. Do not use.
+
 How to work on UI.
 
 The /Project is just a base Laravel installation.
@@ -63,3 +65,7 @@ rm -rf resources/js/vendor/laravel-cms/admin;
 php artisan vendor:publish --provider="Dclaysmith\LaravelCms\Providers\LaravelCmsServiceProvider"
 
 ./deploy
+
+# License
+
+This package is open-sourced software licensed under the MIT license.
