@@ -47,25 +47,6 @@ Work in LaravelCms/Project/packages/LaravelCms
 
 > Project/packages/LaravelCms/.deploy
 
-# BoardMinutesHq/v1/
-
-> composer update (get latest changes)
-> php artisan vendor:publish --provider="Dclaysmith\LaravelCms\Providers\LaravelCmsServiceProvider"
-
-> BoardMeetingsHQ/v1/nova-components/NovaAdminTool/resources/js/pages/Tool.vue
-
-The BoardMeetings http://localhost:8082/nova/nova-admin-tool#/pages/1
-
-#####
-
-composer update;
-
-rm -rf resources/js/vendor/laravel-cms/admin;
-
-php artisan vendor:publish --provider="Dclaysmith\LaravelCms\Providers\LaravelCmsServiceProvider"
-
-./deploy
-
 # License
 
 This package is open-sourced software licensed under the MIT license.
